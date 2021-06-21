@@ -32,29 +32,36 @@ app.delete('/api/v1/hikes/:id', deleteHike);
 //Route callback functions
 //Get all callback - GET
 async function getHikes(req, res){
-  const results = await db.query('SELECT * FROM hikes_list');
-  console.log('hit the hikes route');
-  console.log(results);
-  res.status(200).json({
-    'status': 'success',
-    'data': {
-      'mount baker': 'here are the hikes...',
-      'mount adams': 'here are more hikes...',
-      'mount rainier': 'the biggest of the hikes'
-    }
-  });
+  try{
+    const results = await db.query('SELECT * FROM hikes_list');
+    // console.log('hit the hikes route');
+    console.log(results);
+    res.status(200).json({
+      status: 'success',
+      results: results.rows.length,
+      data: {
+        hikes: results.rows,
+      }
+    });
+  } catch(err){
+      console.log(err);
+  }
 };
 
 //Get one callback - GET
-function getHikeInfo(req, res){
-  // console.log('hit the hike details route');
-  console.log(req.params);
-  res.status(200).json({
-    status: 'success',
-    data: {
-      'hike': 'another one to do',
-    }
-  });
+async function getHikeInfo(req, res){
+  console.log(req.params.id);
+  try{
+    const results = await db.query('SELECT * FROM hikes_list WHERE id = $1', [req.params.id]);
+    res.status(200).json({
+      status: 'success',
+      data: {
+        hike: results.rows[0],
+      }
+    });
+  } catch(err){
+    console.log(err);
+  }
 };
 
 //Create hike callback - POST
