@@ -1,4 +1,5 @@
 const express = require('express');
+const db = require('./db/index.js');
 require('dotenv').config();
 const port = process.env.PORT || 3001;
 //http request logger middleware
@@ -30,9 +31,11 @@ app.delete('/api/v1/hikes/:id', deleteHike);
 
 //Route callback functions
 //Get all callback - GET
-function getHikes(req, res){
+async function getHikes(req, res){
+  const results = await db.query('SELECT * FROM hikes_list');
   console.log('hit the hikes route');
-  res.json({
+  console.log(results);
+  res.status(200).json({
     'status': 'success',
     'data': {
       'mount baker': 'here are the hikes...',
