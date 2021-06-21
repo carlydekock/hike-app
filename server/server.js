@@ -82,19 +82,25 @@ async function saveHike(req, res){
 };
 
 //Update hike callback - PUT
-function updateHike(req, res){
+async function updateHike(req, res){
   console.log(req.params.id);
   console.log(req.body);
-  res.status(200).json({
-    status: 'success',
-    data: {
-      'hike': 'another hike for the list',
-    }
-  });
+  try{
+    const array = [req.body.name, req.body.description, req.body.length, req.body.elevation_gain, req.body.time, req.body.keywords, req.body.latitude, req.body.longitude, req.params.id];
+    const results = await db.query('UPDATE hikes_list SET name=$1, description=$2, length=$3, elevation_gain=$4, time=$5, keywords=$6, latitude=$7, longitude=$8 WHERE id=$9 RETURNING *', array);
+    res.status(200).json({
+      status: 'success',
+      data: {
+        hike: results.rows[0],
+      }
+    })
+  } catch(err){
+    console.log(err);
+  }
 };
 
 //Delete hike callback - DELETE
-function deleteHike(req, res){
+async function deleteHike(req, res){
   console.log(req.params.id);
   res.status(204).json({
     status: "success"
