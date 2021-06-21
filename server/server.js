@@ -65,14 +65,20 @@ async function getHikeInfo(req, res){
 };
 
 //Create hike callback - POST
-function saveHike(req, res){
+async function saveHike(req, res){
   console.log(req.body);
-  res.status(201).json({
-    status: 'success',
-    data: {
-      'hike two': 'another hike for the list',
-    }
-  });
+  try{
+    const array = [req.body.name, req.body.description, req.body.length, req.body.elevation_gain, req.body.time, req.body.keywords, req.body.latitude, req.body.longitude];
+    const results = await db.query('INSERT INTO hikes_list (name, description, length, elevation_gain, time, keywords, latitude, longitude) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *', array);
+    res.status(201).json({
+      status: 'success',
+      data: {
+        hike: results.rows[0]
+      }
+    })
+  } catch(err){
+    console.log(err);
+  }
 };
 
 //Update hike callback - PUT
