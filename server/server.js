@@ -33,7 +33,7 @@ app.delete('/api/v1/hikes/:id', deleteHike);
 //Get all callback - GET
 async function getHikes(req, res){
   try{
-    const results = await db.query('SELECT * FROM hikes_list');
+    const results = await db.query('SELECT * FROM hikes_list;');
     // console.log('hit the hikes route');
     console.log(results);
     res.status(200).json({
@@ -52,7 +52,7 @@ async function getHikes(req, res){
 async function getHikeInfo(req, res){
   console.log(req.params.id);
   try{
-    const results = await db.query('SELECT * FROM hikes_list WHERE id = $1', [req.params.id]);
+    const results = await db.query('SELECT * FROM hikes_list WHERE id = $1;', [req.params.id]);
     res.status(200).json({
       status: 'success',
       data: {
@@ -69,7 +69,7 @@ async function saveHike(req, res){
   console.log(req.body);
   try{
     const array = [req.body.name, req.body.description, req.body.length, req.body.elevation_gain, req.body.time, req.body.keywords, req.body.latitude, req.body.longitude];
-    const results = await db.query('INSERT INTO hikes_list (name, description, length, elevation_gain, time, keywords, latitude, longitude) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *', array);
+    const results = await db.query('INSERT INTO hikes_list (name, description, length, elevation_gain, time, keywords, latitude, longitude) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *;', array);
     res.status(201).json({
       status: 'success',
       data: {
@@ -87,7 +87,7 @@ async function updateHike(req, res){
   console.log(req.body);
   try{
     const array = [req.body.name, req.body.description, req.body.length, req.body.elevation_gain, req.body.time, req.body.keywords, req.body.latitude, req.body.longitude, req.params.id];
-    const results = await db.query('UPDATE hikes_list SET name=$1, description=$2, length=$3, elevation_gain=$4, time=$5, keywords=$6, latitude=$7, longitude=$8 WHERE id=$9 RETURNING *', array);
+    const results = await db.query('UPDATE hikes_list SET name=$1, description=$2, length=$3, elevation_gain=$4, time=$5, keywords=$6, latitude=$7, longitude=$8 WHERE id=$9 RETURNING *;', array);
     res.status(200).json({
       status: 'success',
       data: {
@@ -102,9 +102,14 @@ async function updateHike(req, res){
 //Delete hike callback - DELETE
 async function deleteHike(req, res){
   console.log(req.params.id);
-  res.status(204).json({
-    status: "success"
-  })
+  try{
+    const results = await db.query('DELETE FROM hikes_list WHERE id=$1;', [req.params.id]);
+    res.status(204).json({
+      status: 'success',
+    })
+  } catch(err){
+    console.log(err);
+  }
 }
 
 app.listen(port, () => {
