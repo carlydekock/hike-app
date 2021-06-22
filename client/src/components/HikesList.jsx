@@ -1,6 +1,24 @@
-import React from 'react';
+import React, {useEffect, useContext} from 'react';
+import HikeFinder from '../apis/HikeFinder';
+import { HikesContext } from '../context/HikesContext';
 
-const HikesList = () => {
+const HikesList = (props) => {
+  const {hikes, setHikes} = useContext(HikesContext)
+  //this will run the hook only when component mounts
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await HikeFinder.get("/");
+        setHikes(response.data.data.hikes);
+        console.log(response);
+      } catch(err) {
+        console.log(err);
+      }
+    }
+
+    fetchData();
+  }, []);
+
   return (
     <div className="list-group">
       <table className="table table-bordered table-hover table-light">

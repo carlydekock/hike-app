@@ -35,7 +35,7 @@ const AddHike = () => {
           </div>
           <div className="col">
             <select className="custom-select my-1 mr-sm-2">
-              <option selected>Keywords</option>
+              <option defaultValue>Keywords</option>
               <option value="lake">Lake</option>
               <option value="vista">Vista</option>
               <option value="wildflowers">Wildflowers</option>

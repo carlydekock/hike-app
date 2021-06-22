@@ -1,12 +1,14 @@
 const express = require('express');
 const db = require('./db/index.js');
 require('dotenv').config();
+const cors = require('cors');
 const port = process.env.PORT || 3001;
 //http request logger middleware
 const morgan = require('morgan');
 
 const app = express();
 //middleware that will take info in body of request and attach to request object under property called body
+app.use(cors());
 app.use(express.json());
 
 // app.use(morgan('dev'));
@@ -35,7 +37,7 @@ async function getHikes(req, res){
   try{
     const results = await db.query('SELECT * FROM hikes_list;');
     // console.log('hit the hikes route');
-    console.log(results);
+    // console.log(results);
     res.status(200).json({
       status: 'success',
       results: results.rows.length,
