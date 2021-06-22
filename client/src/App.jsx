@@ -5,7 +5,8 @@ import Update from './routes/Update';
 import Detail from './routes/Detail';
 
 const App = () => {
-  return <div>
+  return (
+  <div className="container">
     <Router>
       <Switch>
         <Route exact path="/" component={Home} />
@@ -13,7 +14,8 @@ const App = () => {
         <Route exact path="/hikes/:id" component={Detail} />
       </Switch>
     </Router>
-  </div>;
+  </div>
+  )
 };
 
 export default App;
