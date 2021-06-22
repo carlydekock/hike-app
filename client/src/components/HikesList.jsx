@@ -1,9 +1,9 @@
-import React, {useEffect, useContext} from 'react';
+import React, { useEffect, useContext } from 'react';
 import HikeFinder from '../apis/HikeFinder';
 import { HikesContext } from '../context/HikesContext';
 
 const HikesList = (props) => {
-  const {hikes, setHikes} = useContext(HikesContext)
+  const { hikes, setHikes } = useContext(HikesContext)
   //this will run the hook only when component mounts
   useEffect(() => {
     const fetchData = async () => {
@@ -11,12 +11,12 @@ const HikesList = (props) => {
         const response = await HikeFinder.get("/");
         setHikes(response.data.data.hikes);
         console.log(response);
-      } catch(err) {
+      } catch (err) {
         console.log(err);
       }
     }
 
-    fetchData();
+    fetchData(); // eslint-disable-next-line
   }, []);
 
   return (
@@ -37,7 +37,19 @@ const HikesList = (props) => {
           </tr>
         </thead>
         <tbody>
-          <tr>
+          {hikes && hikes.map(hike => {
+            return (
+              <tr key={hike.id}>
+                <td>{hike.name}</td>
+                <td>{hike.description}</td>
+                <td>{hike.length}</td>
+                <td>{hike.elevation_gain}</td>
+                <td><button className="btn btn-warning">Update</button></td>
+                <td><button className="btn btn-danger">Delete</button></td>
+              </tr>
+            )
+          })}
+          {/* <tr>
             <td>Baker</td>
             <td>Baker</td>
             <td>Baker</td>
@@ -52,7 +64,7 @@ const HikesList = (props) => {
             <td>Baker</td>
             <td><button className="btn btn-warning">Update</button></td>
             <td><button className="btn btn-danger">Delete</button></td>
-          </tr>
+          </tr> */}
         </tbody>
       </table>
     </div>
