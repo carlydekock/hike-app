@@ -23,7 +23,9 @@ const HikesList = (props) => {
     fetchData(); // eslint-disable-next-line
   }, []);
 
-  const handleDelete = async (id) => {
+  const handleDelete = async (e, id) => {
+    //this stops from going up to the table row, where it will interfere with the onClick for details
+    e.stopPropagation();
     try {
       const response = await HikeFinder.delete(`/${id}`);
       setHikes(hikes.filter(hike => {
@@ -34,9 +36,18 @@ const HikesList = (props) => {
     }
   };
 
-  const handleUpdate = async (id) => {
+  const handleUpdate = async (e, id) => {
+    e.stopPropagation();
     try {
-      history.push(`/hikes/${id}/update`)
+      history.push(`/hikes/${id}/update`);
+    } catch(err){
+      console.log(err);
+    }
+  };
+
+  const handleHikeSelect = async (id) => {
+    try {
+      history.push(`/hikes/${id}`);
     } catch(err){
       console.log(err);
     }
@@ -62,13 +73,13 @@ const HikesList = (props) => {
         <tbody>
           {hikes && hikes.map(hike => {
             return (
-              <tr key={hike.id}>
+              <tr onClick={() => handleHikeSelect(hike.id)} key={hike.id}>
                 <td>{hike.name}</td>
                 <td>{hike.description}</td>
                 <td>{hike.length}</td>
                 <td>{hike.elevation_gain}</td>
-                <td><button onClick={() => handleUpdate(hike.id)} className="btn btn-warning">Update</button></td>
-                <td><button onClick={() => handleDelete(hike.id)} className="btn btn-danger">Delete</button></td>
+                <td><button onClick={(e) => handleUpdate(e, hike.id)} className="btn btn-warning">Update</button></td>
+                <td><button onClick={(e) => handleDelete(e, hike.id)} className="btn btn-danger">Delete</button></td>
               </tr>
             )
           })}
