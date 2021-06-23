@@ -1,6 +1,9 @@
-import React, {useState} from 'react'
+import React, {useState, useContext} from 'react';
+import HikeFinder from '../apis/HikeFinder';
+import { HikesContext } from '../context/HikesContext';
 
 const AddHike = () => {
+  const { addHike } = useContext(HikesContext);
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [length, setLength] = useState("");
@@ -10,10 +13,24 @@ const AddHike = () => {
   const [latitude, setLatitude] = useState("");
   const [longitude, setLongitude] = useState("");
 
-  const handleSubmit = (e) => {
-    console.log('inside submit');
+  const handleSubmit = async (e) => {
     e.preventDefault();
-  
+    try {
+      const response = await HikeFinder.post('/', {
+        name: name,
+        description: description,
+        length: length,
+        elevation_gain: elevation,
+        time: time,
+        keywords: keywords,
+        latitude: latitude,
+        longitude: longitude,
+      });
+      addHike(response.data.data.hike);
+      console.log(response);
+    } catch(err){
+        console.log(err);
+    }
   }
   return (
     <div className="mb-4 p-2">

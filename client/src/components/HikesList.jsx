@@ -1,9 +1,13 @@
 import React, { useEffect, useContext } from 'react';
 import HikeFinder from '../apis/HikeFinder';
 import { HikesContext } from '../context/HikesContext';
+import { useHistory } from 'react-router-dom';
 
 const HikesList = (props) => {
-  const { hikes, setHikes } = useContext(HikesContext)
+  const { hikes, setHikes } = useContext(HikesContext);
+  //history represents history of the browser
+  let history = useHistory();
+
   //this will run the hook only when component mounts
   useEffect(() => {
     const fetchData = async () => {
@@ -18,6 +22,25 @@ const HikesList = (props) => {
 
     fetchData(); // eslint-disable-next-line
   }, []);
+
+  const handleDelete = async (id) => {
+    try {
+      const response = await HikeFinder.delete(`/${id}`);
+      setHikes(hikes.filter(hike => {
+        return hike.id !== id;
+      }));
+    } catch(err){
+      console.log(err);
+    }
+  };
+
+  const handleUpdate = async (id) => {
+    try {
+      history.push(`/hikes/${id}/update`)
+    } catch(err){
+      console.log(err);
+    }
+  };
 
   return (
     <div className="list-group">
@@ -44,27 +67,11 @@ const HikesList = (props) => {
                 <td>{hike.description}</td>
                 <td>{hike.length}</td>
                 <td>{hike.elevation_gain}</td>
-                <td><button className="btn btn-warning">Update</button></td>
-                <td><button className="btn btn-danger">Delete</button></td>
+                <td><button onClick={() => handleUpdate(hike.id)} className="btn btn-warning">Update</button></td>
+                <td><button onClick={() => handleDelete(hike.id)} className="btn btn-danger">Delete</button></td>
               </tr>
             )
           })}
-          {/* <tr>
-            <td>Baker</td>
-            <td>Baker</td>
-            <td>Baker</td>
-            <td>Baker</td>
-            <td><button className="btn btn-warning">Update</button></td>
-            <td><button className="btn btn-danger">Delete</button></td>
-          </tr>
-          <tr>
-            <td>Baker</td>
-            <td>Baker</td>
-            <td>Baker</td>
-            <td>Baker</td>
-            <td><button className="btn btn-warning">Update</button></td>
-            <td><button className="btn btn-danger">Delete</button></td>
-          </tr> */}
         </tbody>
       </table>
     </div>

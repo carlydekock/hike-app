@@ -1,9 +1,11 @@
-import React from 'react'
+import React from 'react';
+import UpdateHike from '../components/UpdateHike';
 
 const Update = () => {
   return (
     <div>
-      Update
+      <h1 className="text-center">Update Hike</h1>
+      <UpdateHike />
     </div>
   )
 };
