@@ -2,6 +2,8 @@ import React, { useContext, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { HikesContext } from '../context/HikesContext';
 import HikeFinder from '../apis/HikeFinder';
+import TripReports from '../components/TripReports';
+import AddReport from '../components/AddReport';
 
 const Detail = () => {
   const { id } = useParams();
@@ -21,7 +23,14 @@ const Detail = () => {
   
   return (
     <div>
-      {selectedHike && selectedHike.name}
+      {selectedHike && (
+        <>
+          <div className="mt-3">
+            <TripReports />
+          </div>
+          <AddReport />
+        </>
+      )}
     </div>
   )
 };
