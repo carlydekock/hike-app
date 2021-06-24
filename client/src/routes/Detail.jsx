@@ -1,6 +1,7 @@
 import React, { useContext, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { HikesContext } from '../context/HikesContext';
+import HikeFinder from '../apis/HikeFinder';
 
 const Detail = () => {
   const { id } = useParams();
@@ -9,7 +10,7 @@ const Detail = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await HikesContext.get(`/${id}`);
+        const response = await HikeFinder.get(`/${id}`);
         setSelectedHike(response.data.data.hike);
       } catch(err) {
           console.log(err);
