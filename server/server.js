@@ -26,6 +26,7 @@ app.get('/api/v1/hikes/:id', getHikeInfo);
 app.post('/api/v1/hikes', saveHike);
 app.put('/api/v1/hikes/:id', updateHike);
 app.delete('/api/v1/hikes/:id', deleteHike);
+app.post('/api/v1/hikes/:id/addreport', saveReport);
 
 // //search page routes
 // app.get('/api/v1/search/new', getSearch);
@@ -54,11 +55,13 @@ async function getHikes(req, res){
 async function getHikeInfo(req, res){
   console.log(req.params.id);
   try{
-    const results = await db.query('SELECT * FROM hikes_list WHERE id = $1;', [req.params.id]);
+    const hikes = await db.query('SELECT * FROM hikes_list WHERE id = $1;', [req.params.id]);
+    const reports = await db.query('SELECT * FROM trip_reports WHERE hike_id = $1;', [req.params.id]);
     res.status(200).json({
       status: 'success',
       data: {
-        hike: results.rows[0],
+        hike: hikes.rows[0],
+        reports: reports.rows,
       }
     });
   } catch(err){
@@ -82,6 +85,25 @@ async function saveHike(req, res){
     console.log(err);
   }
 };
+
+//TODO: This needs dynamic user id from login
+async function saveReport(req, res){
+  console.log(req.body);
+  try {
+    const array = [req.params.id, '1', req.body.name, req.body.title, req.body.description, req.body.date];
+    const results = await db.query('INSERT INTO trip_reports (hike_id, user_id, name, title, description, hiked_at) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *;', array);
+    console.log(results)
+    res.status(201).json({
+      status: 'success',
+      data: {
+        report: results.rows[0]
+      }
+    })
+  } catch(err){
+    console.log(err);
+  }
+}
+
 
 //Update hike callback - PUT
 async function updateHike(req, res){
@@ -113,6 +135,7 @@ async function deleteHike(req, res){
     console.log(err);
   }
 }
+
 
 app.listen(port, () => {
   console.log(`server is up and listening on port ${port}`);

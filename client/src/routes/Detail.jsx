@@ -13,7 +13,7 @@ const Detail = () => {
     const fetchData = async () => {
       try {
         const response = await HikeFinder.get(`/${id}`);
-        setSelectedHike(response.data.data.hike);
+        setSelectedHike(response.data.data);
       } catch(err) {
           console.log(err);
       }
@@ -25,8 +25,9 @@ const Detail = () => {
     <div>
       {selectedHike && (
         <>
-          <div className="mt-3">
-            <TripReports />
+        <h1 className="text-center display-1">{selectedHike.hike.name}</h1>
+          <div className="mt-3 align-item-center">
+            <TripReports reports={selectedHike.reports}/>
           </div>
           <AddReport />
         </>

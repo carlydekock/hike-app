@@ -1,10 +1,23 @@
 import React from 'react';
 
-const TripReports = () => {
+const TripReports = ({reports}) => {
   return (
-    <div className="row mb-2">
-      <div className="card border-dark mb-3" style={{maxWidth: "70%"}}>
-      {/* <div className="card text-white bg-primary mb-3 mr-4" style={{maxWidth: "80%"}}> */}
+    <div className="row mb-2 mx-auto">
+      {reports.map((report) => {
+        return(
+          <div key={report.id} className="card border-dark mb-3" style={{maxWidth: "100%"}}>
+            <div className="card-header d-flex justify-content-between">
+              <span>{report.name}</span>
+              <span>{report.hiked_at}</span>
+            </div>
+            <div className="card-body text-dark">
+              <h5 className="card-title">{report.title}</h5>
+              <p className="card-text">{report.description}</p>
+             </div>
+          </div>
+        )
+      })}
+      {/* <div className="card border-dark mb-3" style={{maxWidth: "70%"}}>
         <div className="card-header d-flex justify-content-between">
           <span>Name of Reviewer</span>
           <span>Date Hiked</span>
@@ -15,7 +28,6 @@ const TripReports = () => {
         </div>
       </div>
       <div className="card border-dark mb-3" style={{maxWidth: "70%"}}>
-      {/* <div className="card text-white bg-primary mb-3 mr-4" style={{maxWidth: "80%"}}> */}
         <div className="card-header d-flex justify-content-between">
           <span>Name of Reviewer</span>
           <span>Date Hiked</span>
@@ -26,7 +38,6 @@ const TripReports = () => {
         </div>
       </div>
       <div className="card border-dark mb-3" style={{maxWidth: "70%"}}>
-      {/* <div className="card text-white bg-primary mb-3 mr-4" style={{maxWidth: "80%"}}> */}
         <div className="card-header d-flex justify-content-between">
           <span>Name of Reviewer</span>
           <span>Date Hiked</span>
@@ -35,7 +46,7 @@ const TripReports = () => {
           <h5 className="card-title">Title of review</h5>
           <p className="card-text">This was great!</p>
         </div>
-      </div>
+      </div> */}
     </div>
   )
 }
