@@ -1,0 +1,37 @@
+CREATE TABLE hikes_list (
+  id SERIAL PRIMARY KEY,
+  name VARCHAR(255) NOT NULL,
+  description TEXT NOT NULL,
+  length VARCHAR(255) NOT NULL,
+  elevation_gain DECIMAL NOT NULL,
+  time VARCHAR(255),
+  keywords VARCHAR(255),
+  latitude DECIMAL NOT NULL,
+  longitude DECIMAL NOT NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE trip_reports (
+  id SERIAL PRIMARY KEY,
+  hike_id INT NOT NULL,
+  user_id INT NOT NULL,
+  name VARCHAR(255),
+  title VARCHAR(255) NOT NULL,
+  description TEXT NOT NULL,
+  hiked_at VARCHAR(255),
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (hike_id) REFERENCES hikes_list (id),
+  FOREIGN KEY (user_id) REFERENCES users (id)
+);
+
+CREATE TABLE users (
+  id SERIAL PRIMARY KEY,
+  first_name VARCHAR(255),
+  last_name VARCHAR(255),
+  email_address VARCHAR(255) UNIQUE,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
