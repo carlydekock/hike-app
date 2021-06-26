@@ -3,13 +3,17 @@ const db = require('./db/index.js');
 require('dotenv').config();
 const cors = require('cors');
 const port = process.env.PORT || 3001;
+// const jwt = require('express-jwt');
+// const jwksRsa = require('jwks-rsa');
+// const bodyParser = require('body-parser');
 //http request logger middleware
-const morgan = require('morgan');
+// const morgan = require('morgan');
 
 const app = express();
 //middleware that will take info in body of request and attach to request object under property called body
 app.use(cors());
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 // app.use(morgan('dev'));
 // app.use((req, res, next) => {

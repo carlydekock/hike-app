@@ -64,7 +64,7 @@ const AddHike = () => {
           <div className="form-group col-md-4">
             <input value={longitude} onChange={(e) => setLongitude(e.target.value)} name="longitude" type="text" className="form-control" placeholder="Longitude" />
           </div>
-          <div className="col">
+          {/* <div className="col">
             <select className="custom-select my-1 mr-sm-2">
               <option defaultValue>Keywords</option>
               <option value="lake">Lake</option>
@@ -72,8 +72,8 @@ const AddHike = () => {
               <option value="wildflowers">Wildflowers</option>
               <option value="wildlife">Wildlife</option>
             </select>
-          </div>
-          <button type="submit" onClick={handleSubmit} className="btn btn-primary btn-sm">Add</button>
+          </div> */}
+          <button type="submit" onClick={handleSubmit} className="btn btn-primary btn-sm pt-2">Add</button>
         </div>
       </form>
     </div>

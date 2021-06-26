@@ -1,10 +1,31 @@
 import React, { useState } from 'react';
+import HikeFinder from '../apis/HikeFinder';
+import { useParams, useLocation, useHistory } from 'react-router-dom';
 
 const AddReport = () => {
+  const { id } = useParams();
+  const history = useHistory();
+  const location = useLocation();
   const [name, setName] = useState("");
   const [date, setDate] = useState("");
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
+
+  const handleSubmitReport = async (e) => {
+    e.preventDefault();
+    try{
+      const response = await HikeFinder.post(`/${id}/addreport`, {
+        name,
+        title,
+        description,
+        hiked_at: date
+      });
+      history.push('/');
+      history.push(location.pathname);
+    } catch(err){
+      console.log(err);
+    }
+  }
 
   return (
     <div className="mb-2 pb-2">
@@ -29,7 +50,7 @@ const AddReport = () => {
             <textarea value={description} onChange={(e) => setDescription(e.target.value)} id="description" placeholder="description of your trip - what do you want to share?" className="form-control" />
           </div>
         </div>
-        <button type="submit" className="btn btn-primary pt-2">Submit</button>
+        <button onClick={handleSubmitReport} type="submit" className="btn btn-primary pt-2">Submit</button>
       </form>
       
     </div>

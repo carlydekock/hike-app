@@ -4,6 +4,7 @@ import { HikesContext } from '../context/HikesContext';
 import HikeFinder from '../apis/HikeFinder';
 import TripReports from '../components/TripReports';
 import AddReport from '../components/AddReport';
+import NavBar from '../components/NavBar';
 
 const Detail = () => {
   const { id } = useParams();
@@ -23,6 +24,7 @@ const Detail = () => {
   
   return (
     <div>
+      <NavBar />
       {selectedHike && (
         <>
         <h1 className="text-center display-1">{selectedHike.hike.name}</h1>
