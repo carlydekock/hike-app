@@ -34,6 +34,8 @@ app.put('/api/v1/hikes/:id', updateHike);
 app.delete('/api/v1/hikes/:id', deleteHike);
 app.post('/api/v1/hikes/:id/addreport', saveReport);
 
+//Get for list page
+app.get('/api/v1/hikes/list', getMyHikes);
 // //search page routes
 // app.get('/api/v1/search/new', getSearch);
 // app.post('/api/v1/search', makeHikeSearch);
@@ -110,6 +112,23 @@ async function saveReport(req, res){
   }
 }
 
+//TODO: rendering statically with id keyed in, make dynamic
+async function getMyHikes(req, res){
+  try{
+    const results = await db.query('SELECT * FROM hikes_list WHERE user_id=1');
+    // console.log('hit the hikes route');
+    // console.log(results);
+    res.status(200).json({
+      status: 'success',
+      results: results.rows.length,
+      data: {
+        hikes: results.rows,
+      }
+    });
+  } catch(err){
+      console.log(err);
+  }
+};
 
 //Update hike callback - PUT
 async function updateHike(req, res){

@@ -4,6 +4,7 @@ import Home from './routes/Home';
 import Update from './routes/Update';
 import Detail from './routes/Detail';
 import Profile from './routes/Profile';
+import List from './routes/List'
 import { HikesContextProvider } from './context/HikesContext';
 import ProtectedRoute from './auth/protected-route';
 
@@ -14,6 +15,7 @@ const App = () => {
         <Router>
           <Switch>
             <Route exact path="/" component={Home} />
+            <ProtectedRoute exact path="/list" component={List} />
             <Route exact path="/hikes/:id/update" component={Update} />
             <Route exact path="/hikes/:id" component={Detail} />
             <ProtectedRoute exact path="/profile" component={Profile} />

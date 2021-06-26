@@ -1,7 +1,7 @@
 import React from 'react';
 import Header from '../components/Header';
 import AddHike from '../components/AddHike';
-import HikesList from '../components/HikesList';
+import MyHikesList from '../components/MyHikesList';
 import NavBar from '../components/NavBar';
 
 const List = () => {
@@ -10,8 +10,8 @@ const List = () => {
     <div>
       <NavBar />
       <Header />
-      <AddHike />
-      <HikesList />
+      {/* <AddHike /> */}
+      <MyHikesList />
     </div>
   )
 };
