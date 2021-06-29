@@ -4,6 +4,7 @@ require('dotenv').config();
 const cors = require('cors');
 const port = process.env.PORT || 3001;
 const helmet = require('helmet');
+const { checkJwt } = require('./auth/check-jwt');
 // const jwt = require('express-jwt');
 // const jwksRsa = require('jwks-rsa');
 // const bodyParser = require('body-parser');
@@ -35,7 +36,7 @@ app.delete('/api/v1/hikes/:id', deleteHike);
 app.post('/api/v1/hikes/:id/addreport', saveReport);
 
 //Get for list page
-app.get('/api/v1/hikes/list', getMyHikes);
+app.get('/api/v1/hikes/list', checkJwt, getMyHikes);
 // //search page routes
 // app.get('/api/v1/search/new', getSearch);
 // app.post('/api/v1/search', makeHikeSearch);
