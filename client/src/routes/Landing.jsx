@@ -4,6 +4,7 @@ import Header from '../components/Header';
 // import HikesList from '../components/HikesList';
 import NavBar from '../components/NavBar';
 import Image from '../components/Image';
+import LoginButton from '../components/LoginButton';
 // import { useAuth0 } from '@auth0/auth0-react';
 
 const Landing = () => {
@@ -17,7 +18,10 @@ const Landing = () => {
       <NavBar />
       <Header />
       <Image />
-      <p>Thanks for visiting the page! Looks like you aren't logged in yet, please login and view your hikes.</p>
+      <div className="text-center pt-5">
+        <p className="mx-auto" style={{maxWidth: "60%", fontSize: "1.75em"}}>Thanks for visiting the page! Looks like you aren't logged in yet, please login to view your hikes.</p>
+        <LoginButton />
+      </div>
     </div>
   )
 };
