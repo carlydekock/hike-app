@@ -28,6 +28,7 @@ CREATE TABLE trip_reports (
 
 CREATE TABLE users (
   id SERIAL PRIMARY KEY,
+  auth_id VARCHAR(255) UNIQUE,
   first_name VARCHAR(255),
   last_name VARCHAR(255),
   email_address VARCHAR(255) UNIQUE,

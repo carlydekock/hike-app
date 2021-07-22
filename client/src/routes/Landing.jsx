@@ -5,7 +5,6 @@ import Header from '../components/Header';
 import NavBar from '../components/NavBar';
 import Image from '../components/Image';
 import LoginButton from '../components/LoginButton';
-// import { useAuth0 } from '@auth0/auth0-react';
 
 const Landing = () => {
 
