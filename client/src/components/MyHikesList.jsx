@@ -2,26 +2,37 @@ import React, { useEffect, useContext } from 'react';
 import HikeFinder from '../apis/HikeFinder';
 import { HikesContext } from '../context/HikesContext';
 import { useHistory } from 'react-router-dom';
+import { useAuth0 } from '@auth0/auth0-react';
+const axios = require('axios');
 
 const HikesList = (props) => {
+  const { getAccessTokenSilently } = useAuth0();
+
   const { hikes, setHikes } = useContext(HikesContext);
   //history represents history of the browser
   let history = useHistory();
 
   //this will run the hook only when component mounts
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await HikeFinder.get("/list");
-        setHikes(response.data.data.hikes);
-        console.log(response);
-      } catch (err) {
-        console.log(err);
-      }
-    }
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const token = await getAccessTokenSilently();
+  //       console.log('this is token inside myhikeslist', token);
+  //       const response = await axios.get('http://localhost:3001/list', {
+  //         headers: {
+  //           authorization: `Bearer ${token}`
+  //         }
+  //       })
+  //       // const response = await HikeFinder.get("/list");
+  //       // setHikes(response.data.data.hikes);
+  //       console.log(response.data);
+  //     } catch (err) {
+  //       console.log(err);
+  //     }
+  //   }
 
-    fetchData(); // eslint-disable-next-line
-  }, []);
+  //   fetchData(); // eslint-disable-next-line
+  // }, []);
 
   // const handleDelete = async (e, id) => {
   //   //this stops from going up to the table row, where it will interfere with the onClick for details

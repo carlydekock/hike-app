@@ -1,12 +1,12 @@
 const jwt = require('express-jwt');
-const jwksRsa = require('jwks-rsa');
+const jwks = require('jwks-rsa');
 
 require('dotenv').config();
 const domain = process.env.REACT_APP_AUTH0_DOMAIN;
 const audience = process.env.REACT_APP_AUTH0_AUDIENCE;
 
 const checkJwt = jwt({
-    secret: jwksRsa.expressJwtSecret({
+    secret: jwks.expressJwtSecret({
         cache: true,
         rateLimit: true,
         jwksRequestsPerMinute: 5,

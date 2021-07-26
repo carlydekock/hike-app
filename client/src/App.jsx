@@ -22,7 +22,7 @@ const App = (props) => {
             <Route exact path="/">
               {!props.auth0.isAuthenticated ? <Landing /> : <Home />}
             </Route>
-            <ProtectedRoute exact path="/list" component={List} />
+            <Route exact path="/list" component={List} />
             <Route exact path="/hikes/:id/update" component={Update} />
             <Route exact path="/hikes/:id" component={Detail} />
             <ProtectedRoute exact path="/profile" component={Profile} />

@@ -16,17 +16,16 @@ app.use(express.urlencoded({ extended: true }));
 
 //Get all hikes
 app.get('/api/v1/hikes', getHikes);
+//Get for list page
+app.get('/api/v1/hikes/list', checkJwt, getMyHikes);
 //Get an individual hike info
 app.get('/api/v1/hikes/:id', getHikeInfo);
-
 //Crud operations for /hikes to save, update, and delete
 app.post('/api/v1/hikes', saveHike);
 app.put('/api/v1/hikes/:id', updateHike);
 app.delete('/api/v1/hikes/:id', deleteHike);
 app.post('/api/v1/hikes/:id/addreport', saveReport);
 
-//Get for list page
-app.get('/api/v1/hikes/list', checkJwt, getMyHikes);
 
 // //search page routes
 // app.get('/api/v1/search/new', getSearch);
@@ -103,6 +102,17 @@ async function saveReport(req, res){
 async function getMyHikes(req, res){
   // console.log('headers', req.headers);
   try{
+    //Adding in auth part of route
+    const accessToken = req.headers.authorization.split(' ')[1];
+    console.log(accessToken);
+    const response = await axios.get('https://dev-yiij3usi.us.auth0.com/userinfo', {
+      headers: {
+        authorization: `Bearer ${accessToken}`
+      }
+    });
+    const userInfo = response.data;
+    console.log(userInfo);
+    ////////////////////////////
     const results = await db.query('SELECT * FROM hikes_list WHERE user_id=1');
     res.status(200).json({
       status: 'success',
