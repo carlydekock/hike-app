@@ -12,13 +12,12 @@ const checkJwt = jwt({
         jwksRequestsPerMinute: 5,
         jwksUri: `https://${domain}/.well-known/jwks.json`,
     }),
-
     audience: audience,
     issuer: `https://${domain}/`,
-    algorithms: ['RS256'],
+    algorithms: ['RS256']
 });
 
 
 module.exports = {
-    checkJwt,
+    checkJwt
 };

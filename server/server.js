@@ -5,6 +5,11 @@ const cors = require('cors');
 const port = process.env.PORT || 3001;
 const helmet = require('helmet');
 const { checkJwt } = require('./auth/check-jwt');
+const jwt = require('express-jwt');
+const jwks = require('jwks-rsa');
+const axios = require('axios');
+const domain = process.env.REACT_APP_AUTH0_DOMAIN;
+const audience = process.env.REACT_APP_AUTH0_AUDIENCE;
 
 const app = express();
 //middleware that will take info in body of request and attach to request object under property called body
@@ -12,6 +17,23 @@ app.use(cors());
 app.use(helmet());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+//TESTING AUTH
+app.get('/protected', checkJwt, async (req, res) => {
+  try {
+    const accessToken = req.headers.authorization.split(' ')[1];
+    const response = await axios.get('https://dev-yiij3usi.us.auth0.com/userinfo', {
+      headers: {
+        authorization: `Bearer ${accessToken}`
+      }
+    });
+    const userInfo = response.data;
+    console.log(userInfo);
+    res.send(userInfo);
+  } catch(err){
+    res.send(err);
+  }
+});
 
 
 //Get all hikes
@@ -112,17 +134,19 @@ async function getMyHikes(req, res){
     });
     const userInfo = response.data;
     console.log(userInfo);
+    res.send(userInfo);
     ////////////////////////////
-    const results = await db.query('SELECT * FROM hikes_list WHERE user_id=1');
-    res.status(200).json({
-      status: 'success',
-      results: results.rows.length,
-      data: {
-        hikes: results.rows,
-      }
-    });
+    // const results = await db.query('SELECT * FROM hikes_list WHERE user_id=1');
+    // res.status(200).json({
+    //   status: 'success',
+    //   results: results.rows.length,
+    //   data: {
+    //     hikes: results.rows,
+    //   }
+    // });
   } catch(err){
       console.log(err);
+      res.send(err.message);
   }
 };
 
