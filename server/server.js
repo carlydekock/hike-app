@@ -1,13 +1,12 @@
 const express = require('express');
 const db = require('./db/index.js');
-require('dotenv').config();
 const cors = require('cors');
-const port = process.env.PORT || 3001;
 const helmet = require('helmet');
-const { checkJwt } = require('./auth/check-jwt');
-const jwt = require('express-jwt');
-const jwks = require('jwks-rsa');
 const axios = require('axios');
+const { checkJwt } = require('./auth/check-jwt');
+
+require('dotenv').config();
+const port = process.env.PORT || 3001;
 const domain = process.env.REACT_APP_AUTH0_DOMAIN;
 const audience = process.env.REACT_APP_AUTH0_AUDIENCE;
 
@@ -22,7 +21,7 @@ app.use(express.urlencoded({ extended: true }));
 app.get('/protected', checkJwt, async (req, res) => {
   try {
     const accessToken = req.headers.authorization.split(' ')[1];
-    const response = await axios.get('https://dev-yiij3usi.us.auth0.com/userinfo', {
+    const response = await axios.get(`https://${domain}/userinfo`, {
       headers: {
         authorization: `Bearer ${accessToken}`
       }
@@ -127,7 +126,7 @@ async function getMyHikes(req, res){
     //Adding in auth part of route
     const accessToken = req.headers.authorization.split(' ')[1];
     console.log(accessToken);
-    const response = await axios.get('https://dev-yiij3usi.us.auth0.com/userinfo', {
+    const response = await axios.get(`https://${domain}/userinfo`, {
       headers: {
         authorization: `Bearer ${accessToken}`
       }

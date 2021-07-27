@@ -27,7 +27,7 @@ const HikesList = (props) => {
     //this stops from going up to the table row, where it will interfere with the onClick for details
     e.stopPropagation();
     try {
-      const response = await HikeFinder.delete(`/${id}`);
+      await HikeFinder.delete(`/${id}`);
       setHikes(hikes.filter(hike => {
         return hike.id !== id;
       }));

@@ -1,13 +1,11 @@
-import React, {useState, useContext, useEffect} from 'react';
+import React, {useState, useEffect} from 'react';
 import { useParams } from 'react-router-dom';
-import { HikesContext } from '../context/HikesContext';
 import HikeFinder from '../apis/HikeFinder';
 import { useHistory } from 'react-router-dom';
 
 const UpdateHike = (props) => {
   const { id } = useParams();
   let history = useHistory();
-  const { hikes } = useContext(HikesContext);
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [length, setLength] = useState("");
@@ -35,7 +33,7 @@ const UpdateHike = (props) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const updatedHike = await HikeFinder.put(`/${id}`, {
+    await HikeFinder.put(`/${id}`, {
       name,
       description,
       length,

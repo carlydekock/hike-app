@@ -8,10 +8,6 @@ import LoginButton from '../components/LoginButton';
 
 const Landing = () => {
 
-  // const { getAccessTokenSilently } = useAuth0();
-  // const token = getAccessTokenSilently();
-  // console.log(token);
-
   return (
     <div>
       <NavBar />

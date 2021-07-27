@@ -11,7 +11,6 @@ import Landing from './routes/Landing';
 import {withAuth0} from '@auth0/auth0-react';
 
 const App = (props) => {
-  console.log('this is user', props.auth0.user);
   
   return (
     <HikesContextProvider>

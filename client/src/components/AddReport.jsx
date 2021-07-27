@@ -14,7 +14,7 @@ const AddReport = () => {
   const handleSubmitReport = async (e) => {
     e.preventDefault();
     try{
-      const response = await HikeFinder.post(`/${id}/addreport`, {
+      await HikeFinder.post(`/${id}/addreport`, {
         name,
         title,
         description,
