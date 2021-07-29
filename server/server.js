@@ -125,7 +125,6 @@ async function getMyHikes(req, res){
   try{
     //Adding in auth part of route
     const accessToken = req.headers.authorization.split(' ')[1];
-    console.log(accessToken);
     const response = await axios.get(`https://${domain}/userinfo`, {
       headers: {
         authorization: `Bearer ${accessToken}`
@@ -133,7 +132,17 @@ async function getMyHikes(req, res){
     });
     const userInfo = response.data;
     console.log(userInfo);
-    res.send(userInfo);
+    const user = await db.query('SELECT id FROM users WHERE auth_id=$1', [userInfo.sub]);
+    console.log('this is user inside getmyhikes', user)
+    if(user.rows.length === 0){
+      let name = userInfo.name.split(' ');
+      let userInfoArray = [userInfo.sub, name[0], name[1], userInfo.nickname]
+      const newUser = await db.query('INSERT INTO users (auth_id, first_name, last_name, email_address) VALUES ($1, $2, $3, $4) RETURNING *;', userInfoArray);
+      console.log('this is the new user back from the db', newUser);
+      res.send(newUser)
+    } else {
+      res.send(userInfo);
+    }
     ////////////////////////////
     // const results = await db.query('SELECT * FROM hikes_list WHERE user_id=1');
     // res.status(200).json({
