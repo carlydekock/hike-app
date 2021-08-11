@@ -36,7 +36,7 @@ app.get('/protected', checkJwt, async (req, res) => {
 
 
 //Get all hikes
-app.get('/api/v1/hikes', getHikes);
+app.get('/api/v1/hikes', checkJwt, getHikes);
 //Get for list page
 app.get('/api/v1/hikes/list', checkJwt, getMyHikes);
 //Get an individual hike info
@@ -55,7 +55,24 @@ app.post('/api/v1/hikes/:id/addreport', saveReport);
 //Route callback functions
 //Get all callback - GET
 async function getHikes(req, res){
+  // console.log('this is req.headers', req.headers);
   try{
+    const accessToken = req.headers.authorization.split(' ')[1];
+    const response = await axios.get(`https://${domain}/userinfo`, {
+      headers: {
+        authorization: `Bearer ${accessToken}`
+      }
+    });
+    const userInfo = response.data;
+    const user = await db.query('SELECT id FROM users WHERE auth_id=$1', [userInfo.sub]);
+    console.log('this is user inside server gethikes', user);
+    if(user.rows.length === 0){
+      let name = userInfo.name.split(' ');
+      let userInfoArray = [userInfo.sub, name[0], name[1], userInfo.nickname]
+      const newUser = await db.query('INSERT INTO users (auth_id, first_name, last_name, email_address) VALUES ($1, $2, $3, $4) RETURNING *;', userInfoArray);
+      console.log('this is the new user back from the db', newUser);
+    }
+    // console.log(userInfo);
     const results = await db.query('SELECT * FROM hikes_list;');
     res.status(200).json({
       status: 'success',
@@ -68,6 +85,8 @@ async function getHikes(req, res){
       console.log(err);
   }
 };
+
+
 
 //Get one callback - GET
 async function getHikeInfo(req, res){
