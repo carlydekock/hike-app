@@ -4,7 +4,6 @@ import { useAuth0 } from "@auth0/auth0-react";
 
 const Profile = () => {
   const { user } = useAuth0();
-  console.log('user from profile page', user);
   const { name, picture, email } = user;
 
   return (
