@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import HikeFinder from '../apis/HikeFinder';
 import { useParams, useLocation, useHistory } from 'react-router-dom';
+import UserContext from '../context/UserContext';
 
 const AddReport = () => {
   const { id } = useParams();
@@ -10,15 +11,17 @@ const AddReport = () => {
   const [date, setDate] = useState("");
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
+  const user = useContext(UserContext);
 
   const handleSubmitReport = async (e) => {
     e.preventDefault();
     try{
       await HikeFinder.post(`/${id}/addreport`, {
+        user,
         name,
         title,
         description,
-        hiked_at: date
+        date,
       });
       history.push('/');
       history.push(location.pathname);

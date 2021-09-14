@@ -8,12 +8,16 @@ import List from './routes/List'
 import { HikesContextProvider } from './context/HikesContext';
 import ProtectedRoute from './auth/protected-route';
 import Landing from './routes/Landing';
-import {withAuth0} from '@auth0/auth0-react';
+import {useAuth0, withAuth0} from '@auth0/auth0-react';
+import UserContext from './context/UserContext';
 
 const App = (props) => {
+
+  const user = useAuth0();
   
   return (
     <HikesContextProvider>
+      <UserContext.Provider value={user.user}>
       <div className="container">
         <Router>
           <Switch>
@@ -28,6 +32,7 @@ const App = (props) => {
           </Switch>
         </Router>
       </div>
+      </UserContext.Provider>
     </HikesContextProvider>
   )
 };

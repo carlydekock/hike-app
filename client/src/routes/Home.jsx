@@ -7,27 +7,11 @@ import Image from '../components/Image';
 
 const Home = () => {
 
-  // //Troubleshooting authentication
-  // async function callProtectedApi(){
-  //   try {
-  //     const token = await getAccessTokenSilently();
-  //     const response = await axios.get('http://localhost:3000/protected', {
-  //       headers: {
-  //         authorization: `Bearer ${token}`
-  //       }
-  //     })
-  //     console.log(response.data);
-  //   } catch (err){
-  //     console.log(err.message);
-  //   }
-  // }
-
   return (
     <div>
       <NavBar />
       <Header />
       <Image />
-        {/* <button type="button" className="btn btn-primary" onClick={callProtectedApi}>Call Protected API</button> */}
       <AddHike />
       <HikesList />
     </div>

@@ -7,12 +7,10 @@ const axios = require('axios');
 
 const HikesList = (props) => {
   const { getAccessTokenSilently } = useAuth0();
-
   const { hikes, setHikes } = useContext(HikesContext);
   //history represents history of the browser
   let history = useHistory();
 
-  //this will run the hook only when component mounts
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -22,9 +20,7 @@ const HikesList = (props) => {
             authorization: `Bearer ${token}`
           }
         })
-        // const response = await HikeFinder.get("/list");
-        // setHikes(response.data.data.hikes);
-        console.log(response.data);
+        setHikes(response.data.data.hikes);
       } catch (err) {
         console.log(err);
       }

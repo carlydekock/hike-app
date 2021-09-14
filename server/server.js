@@ -17,24 +17,6 @@ app.use(helmet());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-//TESTING AUTH
-app.get('/protected', checkJwt, async (req, res) => {
-  try {
-    const accessToken = req.headers.authorization.split(' ')[1];
-    const response = await axios.get(`https://${domain}/userinfo`, {
-      headers: {
-        authorization: `Bearer ${accessToken}`
-      }
-    });
-    const userInfo = response.data;
-    console.log(userInfo);
-    res.send(userInfo);
-  } catch(err){
-    res.send(err);
-  }
-});
-
-
 //Get all hikes
 app.get('/api/v1/hikes', checkJwt, getHikes);
 //Get for list page
@@ -55,7 +37,6 @@ app.post('/api/v1/hikes/:id/addreport', saveReport);
 //Route callback functions
 //Get all callback - GET
 async function getHikes(req, res){
-  // console.log('this is req.headers', req.headers);
   try{
     const accessToken = req.headers.authorization.split(' ')[1];
     const response = await axios.get(`https://${domain}/userinfo`, {
@@ -65,20 +46,23 @@ async function getHikes(req, res){
     });
     const userInfo = response.data;
     const user = await db.query('SELECT id FROM users WHERE auth_id=$1', [userInfo.sub]);
-    console.log('this is user inside server gethikes', user);
+    let userId = user;
     if(user.rows.length === 0){
       let name = userInfo.name.split(' ');
       let userInfoArray = [userInfo.sub, name[0], name[1], userInfo.nickname]
       const newUser = await db.query('INSERT INTO users (auth_id, first_name, last_name, email_address) VALUES ($1, $2, $3, $4) RETURNING *;', userInfoArray);
-      console.log('this is the new user back from the db', newUser);
+      userId = newUser.rows[0].id;
     }
-    // console.log(userInfo);
+    if(typeof userId === 'object'){
+      userId = user.rows[0].id;
+    }
     const results = await db.query('SELECT * FROM hikes_list;');
     res.status(200).json({
       status: 'success',
       results: results.rows.length,
       data: {
         hikes: results.rows,
+        user: userId
       }
     });
   } catch(err){
@@ -97,7 +81,7 @@ async function getHikeInfo(req, res){
       status: 'success',
       data: {
         hike: hikes.rows[0],
-        reports: reports.rows,
+        reports: reports.rows
       }
     });
   } catch(err){
@@ -108,8 +92,11 @@ async function getHikeInfo(req, res){
 //Create hike callback - POST
 async function saveHike(req, res){
   try{
-    const array = [req.body.name, req.body.description, req.body.length, req.body.elevation_gain, req.body.time, req.body.keywords, req.body.latitude, req.body.longitude];
-    const results = await db.query('INSERT INTO hikes_list (name, description, length, elevation_gain, time, keywords, latitude, longitude) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *;', array);
+    const userSubFromAuth0 = req.body.user.sub;
+    const user = await db.query('SELECT id FROM users WHERE auth_id=$1', [userSubFromAuth0]);
+    const userId = user.rows[0].id;
+    const array = [userId, req.body.name, req.body.description, req.body.length, req.body.elevation_gain, req.body.time, req.body.keywords, req.body.latitude, req.body.longitude];
+    const results = await db.query('INSERT INTO hikes_list (user_id, name, description, length, elevation_gain, time, keywords, latitude, longitude) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING *;', array);
     res.status(201).json({
       status: 'success',
       data: {
@@ -121,12 +108,14 @@ async function saveHike(req, res){
   }
 };
 
-//TODO: This needs dynamic user id from login
+//Create a new trip report - rendering dynamically with user info
 async function saveReport(req, res){
   try {
-    const array = [req.params.id, '1', req.body.name, req.body.title, req.body.description, req.body.date];
+    const userSubFromAuth0 = req.body.user.sub;
+    const user = await db.query('SELECT id FROM users WHERE auth_id=$1', [userSubFromAuth0]);
+    const userId = user.rows[0].id;
+    const array = [req.params.id, userId, req.body.name, req.body.title, req.body.description, req.body.date];
     const results = await db.query('INSERT INTO trip_reports (hike_id, user_id, name, title, description, hiked_at) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *;', array);
-    console.log(results)
     res.status(201).json({
       status: 'success',
       data: {
@@ -138,9 +127,8 @@ async function saveReport(req, res){
   }
 }
 
-//TODO: rendering statically with id keyed in, make dynamic
+//Get user's hikes they have contributed - rendering dynamically with user id
 async function getMyHikes(req, res){
-  // console.log('headers', req.headers);
   try{
     //Adding in auth part of route
     const accessToken = req.headers.authorization.split(' ')[1];
@@ -150,27 +138,17 @@ async function getMyHikes(req, res){
       }
     });
     const userInfo = response.data;
-    console.log(userInfo);
+
     const user = await db.query('SELECT id FROM users WHERE auth_id=$1', [userInfo.sub]);
-    console.log('this is user inside getmyhikes', user)
-    if(user.rows.length === 0){
-      let name = userInfo.name.split(' ');
-      let userInfoArray = [userInfo.sub, name[0], name[1], userInfo.nickname]
-      const newUser = await db.query('INSERT INTO users (auth_id, first_name, last_name, email_address) VALUES ($1, $2, $3, $4) RETURNING *;', userInfoArray);
-      console.log('this is the new user back from the db', newUser);
-      res.send(newUser)
-    } else {
-      res.send(userInfo);
-    }
-    ////////////////////////////
-    // const results = await db.query('SELECT * FROM hikes_list WHERE user_id=1');
-    // res.status(200).json({
-    //   status: 'success',
-    //   results: results.rows.length,
-    //   data: {
-    //     hikes: results.rows,
-    //   }
-    // });
+    const userId = user.rows[0].id;
+    const results = await db.query('SELECT * FROM hikes_list WHERE user_id=$1', [userId]);
+    res.status(200).json({
+      status: 'success',
+      results: results.rows.length,
+      data: {
+        hikes: results.rows,
+      }
+    });
   } catch(err){
       console.log(err);
       res.send(err.message);
