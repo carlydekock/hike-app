@@ -21,7 +21,6 @@ const HikesList = (props) => {
           }
         });
         setHikes(response.data.data.hikes);
-        console.log(response);
       } catch (err) {
         console.log(err);
       }
