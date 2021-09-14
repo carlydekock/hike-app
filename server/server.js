@@ -40,7 +40,7 @@ app.get('/api/v1/hikes', checkJwt, getHikes);
 //Get for list page
 app.get('/api/v1/hikes/list', checkJwt, getMyHikes);
 //Get an individual hike info
-app.get('/api/v1/hikes/:id', getHikeInfo);
+app.get('/api/v1/hikes/:id', checkJwt, getHikeInfo);
 //Crud operations for /hikes to save, update, and delete
 app.post('/api/v1/hikes', saveHike);
 app.put('/api/v1/hikes/:id', updateHike);
@@ -55,7 +55,6 @@ app.post('/api/v1/hikes/:id/addreport', saveReport);
 //Route callback functions
 //Get all callback - GET
 async function getHikes(req, res){
-  // console.log('this is req.headers', req.headers);
   try{
     const accessToken = req.headers.authorization.split(' ')[1];
     const response = await axios.get(`https://${domain}/userinfo`, {
@@ -77,7 +76,6 @@ async function getHikes(req, res){
     if(typeof userId === 'object'){
       userId = user.rows[0].id;
     }
-    // console.log(userInfo);
     const results = await db.query('SELECT * FROM hikes_list;');
     res.status(200).json({
       status: 'success',
@@ -97,6 +95,16 @@ async function getHikes(req, res){
 //Get one callback - GET
 async function getHikeInfo(req, res){
   try{
+    const accessToken = req.headers.authorization.split(' ')[1];
+    const response = await axios.get(`https://${domain}/userinfo`, {
+      headers: {
+        authorization: `Bearer ${accessToken}`
+      }
+    });
+    const userInfo = response.data;
+    const user = await db.query('SELECT id FROM users WHERE auth_id=$1', [userInfo.sub]);
+    const userId = user.rows[0].id;
+
     const hikes = await db.query('SELECT * FROM hikes_list WHERE id = $1;', [req.params.id]);
     const reports = await db.query('SELECT * FROM trip_reports WHERE hike_id = $1;', [req.params.id]);
     res.status(200).json({
@@ -104,6 +112,7 @@ async function getHikeInfo(req, res){
       data: {
         hike: hikes.rows[0],
         reports: reports.rows,
+        userId: userId,
       }
     });
   } catch(err){
@@ -127,10 +136,15 @@ async function saveHike(req, res){
   }
 };
 
-//TODO: This needs dynamic user id from login
+//Create a new trip report - rendering dynamically with user info
 async function saveReport(req, res){
+  console.log('this is inside save report', req.body);
+  
   try {
-    const array = [req.params.id, '1', req.body.name, req.body.title, req.body.description, req.body.date];
+    const userSubFromAuth0 = req.body.user.sub;
+    const user = await db.query('SELECT id FROM users WHERE auth_id=$1', [userSubFromAuth0]);
+    const userId = user.rows[0].id;
+    const array = [req.params.id, userId, req.body.name, req.body.title, req.body.description, req.body.date];
     const results = await db.query('INSERT INTO trip_reports (hike_id, user_id, name, title, description, hiked_at) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *;', array);
     console.log(results)
     res.status(201).json({
@@ -144,9 +158,8 @@ async function saveReport(req, res){
   }
 }
 
-//TODO: rendering statically with id keyed in, make dynamic
+//Get user's hikes they have contributed - rendering dynamically with user id
 async function getMyHikes(req, res){
-  // console.log('headers', req.headers);
   try{
     //Adding in auth part of route
     const accessToken = req.headers.authorization.split(' ')[1];
@@ -158,17 +171,6 @@ async function getMyHikes(req, res){
     const userInfo = response.data;
 
     const user = await db.query('SELECT id FROM users WHERE auth_id=$1', [userInfo.sub]);
-    console.log('this is user inside getmyhikes', user.rows[0].id)
-    // if(user.rows.length === 0){
-    //   let name = userInfo.name.split(' ');
-    //   let userInfoArray = [userInfo.sub, name[0], name[1], userInfo.nickname]
-    //   const newUser = await db.query('INSERT INTO users (auth_id, first_name, last_name, email_address) VALUES ($1, $2, $3, $4) RETURNING *;', userInfoArray);
-    //   console.log('this is the new user back from the db', newUser);
-    //   res.send(newUser)
-    // } else {
-    //   res.send(userInfo);
-    // }
-    //////////////////////////
     const userId = user.rows[0].id;
     const results = await db.query('SELECT * FROM hikes_list WHERE user_id=$1', [userId]);
     res.status(200).json({
