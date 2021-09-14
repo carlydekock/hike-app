@@ -1,7 +1,8 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useContext, useEffect} from 'react';
 import { useParams } from 'react-router-dom';
 import HikeFinder from '../apis/HikeFinder';
 import { useHistory } from 'react-router-dom';
+import UserContext from '../context/UserContext';
 
 const UpdateHike = (props) => {
   const { id } = useParams();
@@ -14,6 +15,7 @@ const UpdateHike = (props) => {
   const [keywords, setKeywords] = useState("");
   const [latitude, setLatitude] = useState("");
   const [longitude, setLongitude] = useState("");
+  const user = useContext(UserContext);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -34,6 +36,7 @@ const UpdateHike = (props) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     await HikeFinder.put(`/${id}`, {
+      user,
       name,
       description,
       length,

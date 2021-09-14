@@ -22,7 +22,7 @@ app.get('/api/v1/hikes', checkJwt, getHikes);
 //Get for list page
 app.get('/api/v1/hikes/list', checkJwt, getMyHikes);
 //Get an individual hike info
-app.get('/api/v1/hikes/:id', checkJwt, getHikeInfo);
+app.get('/api/v1/hikes/:id', getHikeInfo);
 //Crud operations for /hikes to save, update, and delete
 app.post('/api/v1/hikes', saveHike);
 app.put('/api/v1/hikes/:id', updateHike);
@@ -75,24 +75,13 @@ async function getHikes(req, res){
 //Get one callback - GET
 async function getHikeInfo(req, res){
   try{
-    const accessToken = req.headers.authorization.split(' ')[1];
-    const response = await axios.get(`https://${domain}/userinfo`, {
-      headers: {
-        authorization: `Bearer ${accessToken}`
-      }
-    });
-    const userInfo = response.data;
-    const user = await db.query('SELECT id FROM users WHERE auth_id=$1', [userInfo.sub]);
-    const userId = user.rows[0].id;
-
     const hikes = await db.query('SELECT * FROM hikes_list WHERE id = $1;', [req.params.id]);
     const reports = await db.query('SELECT * FROM trip_reports WHERE hike_id = $1;', [req.params.id]);
     res.status(200).json({
       status: 'success',
       data: {
         hike: hikes.rows[0],
-        reports: reports.rows,
-        userId: userId,
+        reports: reports.rows
       }
     });
   } catch(err){
