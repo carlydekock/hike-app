@@ -123,7 +123,10 @@ async function getHikeInfo(req, res){
 //Create hike callback - POST
 async function saveHike(req, res){
   try{
-    const array = [req.body.userId, req.body.name, req.body.description, req.body.length, req.body.elevation_gain, req.body.time, req.body.keywords, req.body.latitude, req.body.longitude];
+    const userSubFromAuth0 = req.body.user.sub;
+    const user = await db.query('SELECT id FROM users WHERE auth_id=$1', [userSubFromAuth0]);
+    const userId = user.rows[0].id;
+    const array = [userId, req.body.name, req.body.description, req.body.length, req.body.elevation_gain, req.body.time, req.body.keywords, req.body.latitude, req.body.longitude];
     const results = await db.query('INSERT INTO hikes_list (user_id, name, description, length, elevation_gain, time, keywords, latitude, longitude) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING *;', array);
     res.status(201).json({
       status: 'success',
