@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Home from './routes/Home';
 import Update from './routes/Update';
@@ -8,9 +8,20 @@ import List from './routes/List'
 import { HikesContextProvider } from './context/HikesContext';
 import ProtectedRoute from './auth/protected-route';
 import Landing from './routes/Landing';
-import {withAuth0} from '@auth0/auth0-react';
+import {useAuth0, withAuth0} from '@auth0/auth0-react';
 
 const App = (props) => {
+
+  const user = useAuth0();
+  console.log('this is user inside app', user);
+
+  let [currentUser, setCurrentUser] = useState({});
+  currentUser = user.user; //user info within the Auth0 user object
+
+  useEffect(() => {
+    console.log('inside useEffect - update to user');
+    setCurrentUser(currentUser);
+  }, [currentUser])
   
   return (
     <HikesContextProvider>
