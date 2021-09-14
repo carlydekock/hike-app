@@ -17,24 +17,6 @@ app.use(helmet());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-//TESTING AUTH
-app.get('/protected', checkJwt, async (req, res) => {
-  try {
-    const accessToken = req.headers.authorization.split(' ')[1];
-    const response = await axios.get(`https://${domain}/userinfo`, {
-      headers: {
-        authorization: `Bearer ${accessToken}`
-      }
-    });
-    const userInfo = response.data;
-    console.log(userInfo);
-    res.send(userInfo);
-  } catch(err){
-    res.send(err);
-  }
-});
-
-
 //Get all hikes
 app.get('/api/v1/hikes', checkJwt, getHikes);
 //Get for list page
@@ -64,13 +46,11 @@ async function getHikes(req, res){
     });
     const userInfo = response.data;
     const user = await db.query('SELECT id FROM users WHERE auth_id=$1', [userInfo.sub]);
-    console.log('this is user inside server gethikes', user);
     let userId = user;
     if(user.rows.length === 0){
       let name = userInfo.name.split(' ');
       let userInfoArray = [userInfo.sub, name[0], name[1], userInfo.nickname]
       const newUser = await db.query('INSERT INTO users (auth_id, first_name, last_name, email_address) VALUES ($1, $2, $3, $4) RETURNING *;', userInfoArray);
-      console.log('this is the new user back from the db', newUser);
       userId = newUser.rows[0].id;
     }
     if(typeof userId === 'object'){
@@ -141,15 +121,12 @@ async function saveHike(req, res){
 
 //Create a new trip report - rendering dynamically with user info
 async function saveReport(req, res){
-  console.log('this is inside save report', req.body);
-  
   try {
     const userSubFromAuth0 = req.body.user.sub;
     const user = await db.query('SELECT id FROM users WHERE auth_id=$1', [userSubFromAuth0]);
     const userId = user.rows[0].id;
     const array = [req.params.id, userId, req.body.name, req.body.title, req.body.description, req.body.date];
     const results = await db.query('INSERT INTO trip_reports (hike_id, user_id, name, title, description, hiked_at) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *;', array);
-    console.log(results)
     res.status(201).json({
       status: 'success',
       data: {
