@@ -4,7 +4,7 @@ import { HikesContext } from '../context/HikesContext';
 import { useHistory } from 'react-router-dom';
 import { useAuth0 } from '@auth0/auth0-react';
 
-const HikesList = (props) => {
+const HikesList = () => {
   const { hikes, setHikes } = useContext(HikesContext);
   const { getAccessTokenSilently} = useAuth0();
   //history represents history of the browser
