@@ -66,11 +66,16 @@ async function getHikes(req, res){
     const userInfo = response.data;
     const user = await db.query('SELECT id FROM users WHERE auth_id=$1', [userInfo.sub]);
     console.log('this is user inside server gethikes', user);
+    let userId = user;
     if(user.rows.length === 0){
       let name = userInfo.name.split(' ');
       let userInfoArray = [userInfo.sub, name[0], name[1], userInfo.nickname]
       const newUser = await db.query('INSERT INTO users (auth_id, first_name, last_name, email_address) VALUES ($1, $2, $3, $4) RETURNING *;', userInfoArray);
       console.log('this is the new user back from the db', newUser);
+      userId = newUser.rows[0].id;
+    }
+    if(typeof userId === 'object'){
+      userId = user.rows[0].id;
     }
     // console.log(userInfo);
     const results = await db.query('SELECT * FROM hikes_list;');
@@ -79,6 +84,7 @@ async function getHikes(req, res){
       results: results.rows.length,
       data: {
         hikes: results.rows,
+        user: userId
       }
     });
   } catch(err){
@@ -108,8 +114,8 @@ async function getHikeInfo(req, res){
 //Create hike callback - POST
 async function saveHike(req, res){
   try{
-    const array = [req.body.name, req.body.description, req.body.length, req.body.elevation_gain, req.body.time, req.body.keywords, req.body.latitude, req.body.longitude];
-    const results = await db.query('INSERT INTO hikes_list (name, description, length, elevation_gain, time, keywords, latitude, longitude) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *;', array);
+    const array = [req.body.userId, req.body.name, req.body.description, req.body.length, req.body.elevation_gain, req.body.time, req.body.keywords, req.body.latitude, req.body.longitude];
+    const results = await db.query('INSERT INTO hikes_list (user_id, name, description, length, elevation_gain, time, keywords, latitude, longitude) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING *;', array);
     res.status(201).json({
       status: 'success',
       data: {
@@ -150,27 +156,28 @@ async function getMyHikes(req, res){
       }
     });
     const userInfo = response.data;
-    console.log(userInfo);
+
     const user = await db.query('SELECT id FROM users WHERE auth_id=$1', [userInfo.sub]);
-    console.log('this is user inside getmyhikes', user)
-    if(user.rows.length === 0){
-      let name = userInfo.name.split(' ');
-      let userInfoArray = [userInfo.sub, name[0], name[1], userInfo.nickname]
-      const newUser = await db.query('INSERT INTO users (auth_id, first_name, last_name, email_address) VALUES ($1, $2, $3, $4) RETURNING *;', userInfoArray);
-      console.log('this is the new user back from the db', newUser);
-      res.send(newUser)
-    } else {
-      res.send(userInfo);
-    }
-    ////////////////////////////
-    // const results = await db.query('SELECT * FROM hikes_list WHERE user_id=1');
-    // res.status(200).json({
-    //   status: 'success',
-    //   results: results.rows.length,
-    //   data: {
-    //     hikes: results.rows,
-    //   }
-    // });
+    console.log('this is user inside getmyhikes', user.rows[0].id)
+    // if(user.rows.length === 0){
+    //   let name = userInfo.name.split(' ');
+    //   let userInfoArray = [userInfo.sub, name[0], name[1], userInfo.nickname]
+    //   const newUser = await db.query('INSERT INTO users (auth_id, first_name, last_name, email_address) VALUES ($1, $2, $3, $4) RETURNING *;', userInfoArray);
+    //   console.log('this is the new user back from the db', newUser);
+    //   res.send(newUser)
+    // } else {
+    //   res.send(userInfo);
+    // }
+    //////////////////////////
+    const userId = user.rows[0].id;
+    const results = await db.query('SELECT * FROM hikes_list WHERE user_id=$1', [userId]);
+    res.status(200).json({
+      status: 'success',
+      results: results.rows.length,
+      data: {
+        hikes: results.rows,
+      }
+    });
   } catch(err){
       console.log(err);
       res.send(err.message);
