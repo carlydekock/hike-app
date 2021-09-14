@@ -2,11 +2,13 @@ import React, {useState, useContext} from 'react';
 import HikeFinder from '../apis/HikeFinder';
 import { HikesContext } from '../context/HikesContext';
 
-const AddHike = () => {
+const AddHike = (props) => {
   const { addHike } = useContext(HikesContext);
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [length, setLength] = useState("");
+  const [unit, setUnit] = useState("");
+  const [unitTime, setUnitTime] = useState("");
   const [elevation, setElevation] = useState("");
   const [time, setTime] = useState("");
   const [keywords, setKeywords] = useState("");
@@ -16,18 +18,21 @@ const AddHike = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      const lengthToSubmit = `${length} ${unit}`;
+      const timeToSubmit = `${time} ${unitTime}`;
+
       const response = await HikeFinder.post('/', {
+        userId: props.userId,
         name: name,
         description: description,
-        length: length,
+        length: lengthToSubmit,
         elevation_gain: elevation,
-        time: time,
+        time: timeToSubmit,
         keywords: keywords,
         latitude: latitude,
         longitude: longitude,
       });
       addHike(response.data.data.hike);
-      console.log(response);
     } catch(err){
         console.log(err);
     }
@@ -44,14 +49,26 @@ const AddHike = () => {
           </div>
         </div>
         <div className="row mb-2">
-          <div className="form-group col-md-4">
+          <div className="form-group input-group col-md-4">
             <input value={length} onChange={(e) => setLength(e.target.value)} name="length" type="text" className="form-control" placeholder="Length (in miles)" />
+            <div className="input-group-append">
+              <button className="btn btn-outline-secondary" type="button" value="mi" onClick={(e) => setUnit(e.target.value)}>mi</button>
+              <button className="btn btn-outline-secondary" type="button" value="km" onClick={(e) => setUnit(e.target.value)}>km</button>
+            </div>
           </div>
-          <div className="form-group col-md-4">
+          <div className="form-group input-group col-md-4">
             <input value={elevation} onChange={(e) => setElevation(e.target.value)}name="elevation" type="text" className="form-control" placeholder="Elevation (in feet)" />
+            <div className="input-group-append">
+              <button className="btn btn-outline-secondary" type="button" value="ft">ft</button>
+              <button className="btn btn-outline-secondary" type="button" value="m">m</button>
+            </div>
           </div>
-          <div className="form-group col-md-4">
+          <div className="form-group input-group col-md-4">
             <input value={time} onChange={(e) => setTime(e.target.value)}name="time" type="text" className="form-control" placeholder="Time to Complete" />
+            <div className="input-group-append">
+              <button className="btn btn-outline-secondary" type="button" value="min" onClick={(e) => setUnitTime(e.target.value)}>min</button>
+              <button className="btn btn-outline-secondary" type="button" value="hrs" onClick={(e) => setUnitTime(e.target.value)}>hrs</button>
+            </div>
           </div>
         </div>
         <div className="row mb-2">
