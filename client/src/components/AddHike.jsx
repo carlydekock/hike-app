@@ -1,8 +1,9 @@
 import React, {useState, useContext} from 'react';
 import HikeFinder from '../apis/HikeFinder';
 import { HikesContext } from '../context/HikesContext';
+import UserContext from '../context/UserContext';
 
-const AddHike = (props) => {
+const AddHike = () => {
   const { addHike } = useContext(HikesContext);
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
@@ -14,6 +15,7 @@ const AddHike = (props) => {
   const [keywords, setKeywords] = useState("");
   const [latitude, setLatitude] = useState("");
   const [longitude, setLongitude] = useState("");
+  const user = useContext(UserContext);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -22,15 +24,15 @@ const AddHike = (props) => {
       const timeToSubmit = `${time} ${unitTime}`;
 
       const response = await HikeFinder.post('/', {
-        userId: props.userId,
-        name: name,
-        description: description,
+        user,
+        name,
+        description,
         length: lengthToSubmit,
         elevation_gain: elevation,
         time: timeToSubmit,
-        keywords: keywords,
-        latitude: latitude,
-        longitude: longitude,
+        keywords,
+        latitude,
+        longitude,
       });
       addHike(response.data.data.hike);
     } catch(err){
@@ -90,7 +92,7 @@ const AddHike = (props) => {
               <option value="wildlife">Wildlife</option>
             </select>
           </div> */}
-          <button type="submit" onClick={handleSubmit} className="btn btn-primary btn-sm pt-2">Add</button>
+          <button type="submit" onClick={handleSubmit} className="btn btn-primary btn-sm pt-2">Add New Hike</button>
         </div>
       </form>
     </div>
