@@ -1,6 +1,10 @@
-const { Pool } = require('pg');
-//this is what will connect to postgres database - from the docs
-const pool = new Pool();
-module.exports = {
-  query: (text, params) => pool.query(text, params),
-};
+const { Client } = require('pg');
+const db = process.env.NODE_ENV === 'test' ? 'hike_test' : 'hike_finder';
+
+const client = new Client({
+  connectionString: `postgresql://localhost:5432/${db}`,
+});
+
+client.connect();
+
+module.exports = client;
