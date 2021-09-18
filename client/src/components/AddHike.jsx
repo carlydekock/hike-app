@@ -40,9 +40,9 @@ const AddHike = () => {
     }
   }
   return (
-    <div className="mb-4 p-2">
+    <div className="container d-flex justify-content-center my-3">
       <form action="">
-        <div className="row mb-2">
+        <div className="row">
           <div className="col">
             <input value={name} onChange={(e) => setName(e.target.value)} name="name" type="text" className="form-control" placeholder="Name of Hike" />
           </div>
@@ -50,22 +50,22 @@ const AddHike = () => {
             <input value={description} onChange={(e) => setDescription(e.target.value)} name="description" type="text" className="form-control" placeholder="Description of Hike" />
           </div>
         </div>
-        <div className="row mb-2">
-          <div className="form-group input-group col-md-4">
+        <div className="row my-2">
+          <div className="form-group input-group col">
             <input value={length} onChange={(e) => setLength(e.target.value)} name="length" type="text" className="form-control" placeholder="Length (in miles)" />
             <div className="input-group-append">
               <button className="btn btn-outline-secondary" type="button" value="mi" onClick={(e) => setUnit(e.target.value)}>mi</button>
               <button className="btn btn-outline-secondary" type="button" value="km" onClick={(e) => setUnit(e.target.value)}>km</button>
             </div>
           </div>
-          <div className="form-group input-group col-md-4">
+          <div className="form-group input-group col">
             <input value={elevation} onChange={(e) => setElevation(e.target.value)}name="elevation" type="text" className="form-control" placeholder="Elevation (in feet)" />
             <div className="input-group-append">
               <button className="btn btn-outline-secondary" type="button" value="ft">ft</button>
               <button className="btn btn-outline-secondary" type="button" value="m">m</button>
             </div>
           </div>
-          <div className="form-group input-group col-md-4">
+          <div className="form-group input-group col">
             <input value={time} onChange={(e) => setTime(e.target.value)}name="time" type="text" className="form-control" placeholder="Time to Complete" />
             <div className="input-group-append">
               <button className="btn btn-outline-secondary" type="button" value="min" onClick={(e) => setUnitTime(e.target.value)}>min</button>
@@ -73,14 +73,14 @@ const AddHike = () => {
             </div>
           </div>
         </div>
-        <div className="row mb-2">
-          <div className="form-group col-md-4">
+        <div className="row my-2">
+          <div className="form-group col">
             <input value={keywords} onChange={(e) => setKeywords(e.target.value)} name="keywords" type="text" className="form-control" placeholder="Keywords" />
           </div>
-          <div className="form-group col-md-4">
+          <div className="form-group col">
             <input value={latitude} onChange={(e) => setLatitude(e.target.value)} name="latitude" type="text" className="form-control" placeholder="Latitude" />
           </div>
-          <div className="form-group col-md-4">
+          <div className="form-group col">
             <input value={longitude} onChange={(e) => setLongitude(e.target.value)} name="longitude" type="text" className="form-control" placeholder="Longitude" />
           </div>
           {/* <div className="col">
@@ -92,7 +92,9 @@ const AddHike = () => {
               <option value="wildlife">Wildlife</option>
             </select>
           </div> */}
-          <button type="submit" onClick={handleSubmit} className="btn btn-primary btn-sm pt-2">Add New Hike</button>
+          <div className="d-flex justify-content-center my-3">
+            <button type="submit" onClick={handleSubmit} className="btn btn-secondary" style={{"width":"50%"}}>Add New Hike</button>
+          </div>
         </div>
       </form>
     </div>
