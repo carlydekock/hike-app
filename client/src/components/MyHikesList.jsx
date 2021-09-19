@@ -3,7 +3,6 @@ import HikeFinder from '../apis/HikeFinder';
 import { HikesContext } from '../context/HikesContext';
 import { useHistory } from 'react-router-dom';
 import { useAuth0 } from '@auth0/auth0-react';
-const axios = require('axios');
 
 const HikesList = (props) => {
   const { getAccessTokenSilently } = useAuth0();
@@ -15,7 +14,7 @@ const HikesList = (props) => {
     const fetchData = async () => {
       try {
         const token = await getAccessTokenSilently();
-        const response = await axios.get('http://localhost:3000/api/v1/hikes/list', {
+        const response = await HikeFinder.get("/list", {
           headers: {
             authorization: `Bearer ${token}`
           }
