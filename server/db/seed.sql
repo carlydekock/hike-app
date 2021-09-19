@@ -1,5 +1,11 @@
 INSERT INTO users (auth_id, first_name, last_name, email_address) VALUES ('auth0|60d68c7dc0b80a006a831d43', 'Carly', 'Dekock', 'carly.m.dekock@gmail.com');
 
+INSERT INTO users (auth_id, first_name, last_name, email_address) VALUES ('auth0|6100548cc724050071b58567', 'Carly', 'McBride', 'carly.a.mcbride@gmail.com');
+
+INSERT INTO users (auth_id, first_name, last_name, email_address) VALUES ('auth0|6114b6ce2b1c5d006944cd34', 'Sahar', 'Bala', 'hellosaharb@gmail.com');
+
+INSERT INTO users (auth_id, first_name, last_name, email_address) VALUES ('auth0|611727de9b035d00695b0720', 'bcdekock@gmail.com', '', 'bcdekock');
+
 INSERT INTO hikes_list (user_id, name, description, length, elevation_gain, time, keywords, latitude, longitude) VALUES (1, 'Mount Adams South Climb', 'The south climb or lunch counter approach.', '12.0 mi', '6700 ft', '6 hours', 'wildflowers, vista', 46.1359, -121.4976);
 
 INSERT INTO hikes_list (user_id, name, description, length, elevation_gain, time, keywords, latitude, longitude) VALUES (1, 'Mount Baker Heliotrope Ridge', 'Heliotrope ridge trail overlooking Mount Baker', '5.5 mi', '1400 ft', '3 hours', 'wildflowers, vista, mountain view', 48.8021, -121.8957);
@@ -14,7 +20,7 @@ INSERT INTO hikes_list (user_id, name, description, length, elevation_gain, time
 
 INSERT INTO hikes_list (user_id, name, description, length, elevation_gain, time, keywords, latitude, longitude) VALUES (3, 'Dege Peak', 'Short hike from Mt Rainier, great views.', '4.0 mi', '600 ft', '40 min', 'wildflowers, mountain, views', 46.9146, -121.6423);
 
-INSERT INTO hikes_list (user_id, name, description, length, elevation_gain, time, keywords, latitude, longitude) VALUES (6, 'Rattlesnake Ledge', 'Forest trail with views of the Cedar River watershed and Mount Si.', '4.0 mi', '1160 ft', '3 hrs', 'forest, mountains', 47.4347, -121.7687);
+INSERT INTO hikes_list (user_id, name, description, length, elevation_gain, time, keywords, latitude, longitude) VALUES (4, 'Rattlesnake Ledge', 'Forest trail with views of the Cedar River watershed and Mount Si.', '4.0 mi', '1160 ft', '3 hrs', 'forest, mountains', 47.4347, -121.7687);
 
 INSERT INTO hikes_list (user_id, name, description, length, elevation_gain, time, keywords, latitude, longitude) VALUES (2, 'Snow Lake', 'Beautiful lake tucked under Chair Peak, accessible via Alpental Ski Area.', '7.2 mi', '1800 ft', '3 hrs', 'alpine lake, rugged terrain', 47.4454, -121.4230);
 
