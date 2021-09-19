@@ -9,6 +9,7 @@ const AddHike = () => {
   const [description, setDescription] = useState("");
   const [length, setLength] = useState("");
   const [unit, setUnit] = useState("");
+  const [unitElev, setUnitElev] = useState("");
   const [unitTime, setUnitTime] = useState("");
   const [elevation, setElevation] = useState("");
   const [time, setTime] = useState("");
@@ -21,6 +22,7 @@ const AddHike = () => {
     e.preventDefault();
     try {
       const lengthToSubmit = `${length} ${unit}`;
+      const elevToSubmit = `${elevation} ${unitElev}`;
       const timeToSubmit = `${time} ${unitTime}`;
 
       const response = await HikeFinder.post('/', {
@@ -28,7 +30,7 @@ const AddHike = () => {
         name,
         description,
         length: lengthToSubmit,
-        elevation_gain: elevation,
+        elevation_gain: elevation, //this would be elevToSubmit but need to edit db
         time: timeToSubmit,
         keywords,
         latitude,
@@ -60,6 +62,11 @@ const AddHike = () => {
           </div>
           <div className="form-group input-group col">
             <input value={elevation} onChange={(e) => setElevation(e.target.value)}name="elevation" type="text" className="form-control" placeholder="Elevation (in feet)" />
+            {/* Need to edit db schema to allow for ft or m */}
+            {/* <div className="input-group-append">
+              <button className="btn btn-outline-secondary" type="button" value="ft" onClick={(e) => setUnitElev(e.target.value)}>ft</button>
+              <button className="btn btn-outline-secondary" type="button" value="m" onClick={(e) => setUnitElev(e.target.value)}>m</button>
+            </div> */}
             <div className="input-group-append">
               <button className="btn btn-outline-secondary" type="button" value="ft">ft</button>
               <button className="btn btn-outline-secondary" type="button" value="m">m</button>
@@ -93,7 +100,7 @@ const AddHike = () => {
             </select>
           </div> */}
           <div className="d-flex justify-content-center my-3">
-            <button type="submit" onClick={handleSubmit} className="btn btn-secondary" style={{"width":"50%"}}>Add New Hike</button>
+            <button type="submit" onClick={handleSubmit} className="btn btn-dark" style={{"width":"50%"}}>Add New Hike</button>
           </div>
         </div>
       </form>
