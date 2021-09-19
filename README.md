@@ -4,7 +4,7 @@ Author: Carly Dekock
 
 Link to GitHub repo [here](https://github.com/carlydekock/hike-app)
 
-Deployed Link: **TODO**
+Deployed Link: https://hike-finder.netlify.app/
 
 ## Application Info
 
