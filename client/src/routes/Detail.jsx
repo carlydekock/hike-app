@@ -5,6 +5,7 @@ import HikeFinder from '../apis/HikeFinder';
 import TripReports from '../components/TripReports';
 import AddReport from '../components/AddReport';
 import NavBar from '../components/NavBar';
+import HikeDetail from '../components/HikeDetail';
 
 const Detail = () => {
   const { id } = useParams();
@@ -28,10 +29,14 @@ const Detail = () => {
       {selectedHike && (
         <>
         <h1 className="text-center display-1">{selectedHike.hike.name}</h1>
+          <div>
+          </div>
           <div className="mt-3 align-item-center">
             <TripReports reports={selectedHike.reports}/>
           </div>
           <AddReport />
+          <br />
+          <HikeDetail hike={selectedHike}/>
         </>
       )}
     </div>
