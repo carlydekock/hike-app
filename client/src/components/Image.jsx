@@ -4,7 +4,7 @@ import image from '../img/Baker2.JPG';
 const Image = () => {
   return (
     <div className="text-center">
-      <img className="rounded" src={image} alt="Mount Baker" style={{maxWidth: "70%"}} />
+      <img className="rounded" src={image} alt="Mount Baker" style={{maxWidth: "90%"}} />
     </div>
   )
 }
