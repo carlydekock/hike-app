@@ -14,7 +14,7 @@ CREATE TABLE hikes_list (
   name VARCHAR(255) NOT NULL,
   description TEXT NOT NULL,
   length VARCHAR(255) NOT NULL,
-  elevation_gain DECIMAL NOT NULL,
+  elevation_gain VARCHAR(255),
   time VARCHAR(255),
   keywords VARCHAR(255),
   latitude DECIMAL NOT NULL,
