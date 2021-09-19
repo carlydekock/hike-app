@@ -64,11 +64,11 @@ const HikesList = () => {
     <div className="list-group">
       <table className="table table-bordered table-hover table-light">
         <thead>
-          <tr className="table-primary">
+          <tr className="table-info">
             <th scope="col">Hike</th>
             <th scope="col">Description</th>
             <th scope="col">Length</th>
-            <th scope="col">Elevation Gain</th>
+            <th scope="col">Elev. Gain</th>
             {/* <th scope="col">Time</th>
             <th scope="col">Keywords</th>
             <th scope="col">Latitude</th>
@@ -85,8 +85,8 @@ const HikesList = () => {
                 <td>{hike.description}</td>
                 <td>{hike.length}</td>
                 <td>{hike.elevation_gain}</td>
-                <td><button onClick={(e) => handleUpdate(e, hike.id)} className="btn btn-warning">Update</button></td>
-                <td><button onClick={(e) => handleDelete(e, hike.id)} className="btn btn-danger">Delete</button></td>
+                <td><button onClick={(e) => handleUpdate(e, hike.id)} className="btn btn-info btn-sm">Update</button></td>
+                <td><button onClick={(e) => handleDelete(e, hike.id)} className="btn btn-secondary btn-sm">Delete</button></td>
               </tr>
             )
           })}
