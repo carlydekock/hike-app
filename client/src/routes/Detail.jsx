@@ -5,6 +5,7 @@ import HikeFinder from '../apis/HikeFinder';
 import TripReports from '../components/TripReports';
 import AddReport from '../components/AddReport';
 import NavBar from '../components/NavBar';
+import HikeDetail from '../components/HikeDetail';
 
 const Detail = () => {
   const { id } = useParams();
@@ -32,6 +33,8 @@ const Detail = () => {
             <TripReports reports={selectedHike.reports}/>
           </div>
           <AddReport />
+          <br />
+          <HikeDetail hike={selectedHike}/>
         </>
       )}
     </div>

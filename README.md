@@ -59,6 +59,7 @@ Deployed Link: **TODO**
 - Unit testing token verification for Auth0 using Jest and mock-jwks [article](https://codedaily.io/tutorials/Unit-Test-Token-Verification-for-Auth0-using-Jest-and-mock-jwks)
 - Testing PostgreSQL database [here](https://stackoverflow.com/questions/61720872/how-do-you-test-postgres-with-node-js-jest-without-mocking-the-pg-import)
 - Mock postgres database for unit testing with jest and supertest [here](https://www.rithmschool.com/courses/intermediate-node-express/api-tests-with-jest)
+- Form styling: Bootstrap [docs](https://getbootstrap.com/docs/4.0/layout/grid/)
 
 ## Tech Used
 

@@ -2,10 +2,10 @@ import React from 'react';
 
 const TripReports = ({reports}) => {
   return (
-    <div className="row mb-2 mx-auto">
+    <div className="row mb-2 d-flex justify-content-center">
       {reports.map((report) => {
         return(
-          <div key={report.id} className="card border-dark mb-3" style={{maxWidth: "100%"}}>
+          <div key={report.id} className="card border-dark mb-3" style={{"width": "80%"}}>
             <div className="card-header d-flex justify-content-between">
               <span>{report.name}</span>
               <span>{report.hiked_at}</span>
