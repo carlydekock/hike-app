@@ -29,8 +29,6 @@ const Detail = () => {
       {selectedHike && (
         <>
         <h1 className="text-center display-1">{selectedHike.hike.name}</h1>
-          <div>
-          </div>
           <div className="mt-3 align-item-center">
             <TripReports reports={selectedHike.reports}/>
           </div>
