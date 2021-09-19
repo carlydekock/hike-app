@@ -30,7 +30,7 @@ const AddHike = () => {
         name,
         description,
         length: lengthToSubmit,
-        elevation_gain: elevation, //this would be elevToSubmit but need to edit db
+        elevation_gain: elevToSubmit, 
         time: timeToSubmit,
         keywords,
         latitude,
@@ -62,14 +62,9 @@ const AddHike = () => {
           </div>
           <div className="form-group input-group col">
             <input value={elevation} onChange={(e) => setElevation(e.target.value)}name="elevation" type="text" className="form-control" placeholder="Elevation (in feet)" />
-            {/* Need to edit db schema to allow for ft or m */}
-            {/* <div className="input-group-append">
+            <div className="input-group-append">
               <button className="btn btn-outline-secondary" type="button" value="ft" onClick={(e) => setUnitElev(e.target.value)}>ft</button>
               <button className="btn btn-outline-secondary" type="button" value="m" onClick={(e) => setUnitElev(e.target.value)}>m</button>
-            </div> */}
-            <div className="input-group-append">
-              <button className="btn btn-outline-secondary" type="button" value="ft">ft</button>
-              <button className="btn btn-outline-secondary" type="button" value="m">m</button>
             </div>
           </div>
           <div className="form-group input-group col">
