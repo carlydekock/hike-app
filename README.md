@@ -60,6 +60,8 @@ Deployed Link: https://hike-finder.netlify.app/
 - Testing PostgreSQL database [here](https://stackoverflow.com/questions/61720872/how-do-you-test-postgres-with-node-js-jest-without-mocking-the-pg-import)
 - Mock postgres database for unit testing with jest and supertest [here](https://www.rithmschool.com/courses/intermediate-node-express/api-tests-with-jest)
 - Form styling: Bootstrap [docs](https://getbootstrap.com/docs/4.0/layout/grid/)
+- Troubleshooting Heroku/PostgreSQL DB connection [StackOverflow](https://stackoverflow.com/questions/47297212/heroku-postgres-add-on-connection-string-for-nodejs-app)
+- Deploying a PERN fullstack app from one repo on Heroku and Netlify article [here](https://levelup.gitconnected.com/deploy-pern-fullstack-app-on-heroku-and-netlify-automatic-deploy-9b61ac6a254e)
 
 ## Tech Used
 
