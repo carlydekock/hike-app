@@ -3,7 +3,7 @@
 // const request = supertest(app.app);
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Home from '../src/routes/Home.jsx';
+import Home from '../../src/routes/Home.jsx';
 import { useAuth0 } from '@auth0/auth0-react';
 require('dotenv').config();
 const sub = process.env.SUB;
@@ -34,6 +34,6 @@ describe('testing auth', () => {
 
   it("renders without crashing", () => {
     const div = document.createElement("div");
-    ReactDOM.render( < Home / > , div);
+    ReactDOM.render( < Home /> , div);
   });
 })
