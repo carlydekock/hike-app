@@ -4,7 +4,7 @@ Author: Carly Dekock
 
 Link to GitHub repo [here](https://github.com/carlydekock/hike-app)
 
-Deployed Link: https://hike-finder.netlify.app/
+Deployed Link: [https://hike-finder.netlify.app/](https://hike-finder.netlify.app/)
 
 ## Application Info
 
@@ -62,6 +62,11 @@ Deployed Link: https://hike-finder.netlify.app/
 - Form styling: Bootstrap [docs](https://getbootstrap.com/docs/4.0/layout/grid/)
 - Troubleshooting Heroku/PostgreSQL DB connection [StackOverflow](https://stackoverflow.com/questions/47297212/heroku-postgres-add-on-connection-string-for-nodejs-app)
 - Deploying a PERN fullstack app from one repo on Heroku and Netlify article [here](https://levelup.gitconnected.com/deploy-pern-fullstack-app-on-heroku-and-netlify-automatic-deploy-9b61ac6a254e)
+- Troubleshooting React component testing with router [StackOverflow](https://stackoverflow.com/questions/55552147/invariant-failed-you-should-not-use-route-outside-a-router)
+- Cypress testing error message [StackOverflow](https://stackoverflow.com/questions/66378164/referenceerror-process-not-defined-when-executing-cypress-test)
+- Cypress and Auth0 testing: [Auth0Blog](https://auth0.com/blog/end-to-end-testing-with-cypress-and-auth0/) and [Cypress Docs](https://docs.cypress.io/guides/testing-strategies/auth0-authentication#Auth0-Application-Setup)
+- Cypress and Auth0 login testing troubleshooting: [Auth0 Community Blog](https://community.auth0.com/t/end-to-end-testing-with-cypress-and-auth0/19082/78)
+- Cypress testing process not defined error [StackOverflow](https://stackoverflow.com/questions/66378164/referenceerror-process-not-defined-when-executing-cypress-test)
 
 ## Tech Used
 
