@@ -51,6 +51,7 @@ Deployed Link: [https://hike-finder.netlify.app/](https://hike-finder.netlify.ap
 - Cypress examples on GitHub [here](https://github.com/cypress-io/cypress-example-recipes/blob/master/examples/logging-in__single-sign-on/cypress/integration/logging-in-single-sign-on-spec.js)
 - Cypress testing docs [here](https://docs.cypress.io/api/commands/get), env variables [here](https://docs.cypress.io/guides/guides/environment-variables#Setting)
 - Further documentation on authorization code flow from [Auth0](https://auth0.com/docs/login/authentication/add-login-auth-code-flow)
+- More info on failed redirects from Cypress Github issues [here](https://github.com/cypress-io/cypress/issues/5919)
 
 ## How To Use
 
