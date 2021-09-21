@@ -84,7 +84,7 @@ const UpdateHike = (props) => {
           <label htmlFor="longitude">Longitude</label>
           <input value={longitude} onChange={e => setLongitude(e.target.value)} id="longitude" className="form-control" type="text" />
         </div>
-        <button onClick={handleSubmit} type="submit" className="btn btn-primary">Submit</button>
+        <button onClick={handleSubmit} type="submit" className="btn btn-info mt-3">Submit</button>
       </form>
     </div>
   )

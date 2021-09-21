@@ -1,6 +1,6 @@
 describe('login', () => {
   it('should successfully log into our app', () => {
-    cy.loginByAuth0Api('carly.m.dekock@gmail.com', 'Woohoo!21')
+    cy.login()
       .then((resp) => {
         return resp.body;
       })
@@ -10,7 +10,7 @@ describe('login', () => {
           nonce: '',
           state: 'some-random-state'
         };
-        const callbackUrl = `callback#access_token=${access_token}&scope=openid&id_token=${id_token}&expires_in=${expires_in}&token_type=Bearer&state=${auth0State.state}`;
+        const callbackUrl = `/#access_token=${access_token}&scope=openid&id_token=${id_token}&expires_in=${expires_in}&token_type=Bearer&state=${auth0State.state}`;
         cy.visit(callbackUrl, {
           onBeforeLoad(win) {
             win.document.cookie = 'com.auth0.auth.some-random-state=' + JSON.stringify(auth0State);

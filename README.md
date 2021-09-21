@@ -35,7 +35,22 @@ Deployed Link: [https://hike-finder.netlify.app/](https://hike-finder.netlify.ap
   - REACT_APP_AUTH0_AUDIENCE
 - Other dependencies:
   - **Server side**: axios, body-parser, cors, dotenv, express, express-jwt, express-jwt-authz, helmet, jest, jwks-rsa, mock-jwks, morgan, nock, nodemon, pg, supertest
-  - **Client side**: axios, react, react-dom, react-router-dom, @auth0/auth0-react
+  - **Client side**: axios, cypress, react, react-dom, react-router-dom, @auth0/auth0-react
+
+## Notes on Testing
+
+- Testing files included for server-side Jest testing, client-side Cypress testing and basic react-dom testing
+- Some Cypress testing working for deployed site, all working locally due with manual login to Auth0 (troubleshooting errors on passing of user credentials)
+- To test locally: change to localhost:3001 in cypress.json file and localhost:3000 in HikeFinder api file
+
+### Main docs for reference troubleshooting
+
+- Auth0 docs [here](https://auth0.com/blog/end-to-end-testing-with-cypress-and-auth0/?_ga=2.244911815.338735673.1632025920-2104252011.1628643904&_gl=1*1odntsq*rollup_ga*MjEwNDI1MjAxMS4xNjI4NjQzOTA0*rollup_ga_F1G3E656YZ*MTYzMjE2NDk5Mi4yMi4wLjE2MzIxNjQ5OTIuNjA)
+- Cypress docs [here](https://docs.cypress.io/guides/testing-strategies/auth0-authentication#Auth0-Application-Setup)
+- Example spec from Auth0 developer [here](https://github.com/adamjmcgrath/cypress-spa-example/blob/master/cypress/integration/example.spec.js) and [here](https://github.com/danlourenco/auth0-cypress-demo/blob/base/src/App.js), relevant GitHub issues link [here](https://github.com/auth0/auth0-spa-js/issues/581)
+- Cypress examples on GitHub [here](https://github.com/cypress-io/cypress-example-recipes/blob/master/examples/logging-in__single-sign-on/cypress/integration/logging-in-single-sign-on-spec.js)
+- Cypress testing docs [here](https://docs.cypress.io/api/commands/get), env variables [here](https://docs.cypress.io/guides/guides/environment-variables#Setting)
+- Further documentation on authorization code flow from [Auth0](https://auth0.com/docs/login/authentication/add-login-auth-code-flow)
 
 ## How To Use
 
@@ -67,6 +82,8 @@ Deployed Link: [https://hike-finder.netlify.app/](https://hike-finder.netlify.ap
 - Cypress and Auth0 testing: [Auth0Blog](https://auth0.com/blog/end-to-end-testing-with-cypress-and-auth0/) and [Cypress Docs](https://docs.cypress.io/guides/testing-strategies/auth0-authentication#Auth0-Application-Setup)
 - Cypress and Auth0 login testing troubleshooting: [Auth0 Community Blog](https://community.auth0.com/t/end-to-end-testing-with-cypress-and-auth0/19082/78)
 - Cypress testing process not defined error [StackOverflow](https://stackoverflow.com/questions/66378164/referenceerror-process-not-defined-when-executing-cypress-test)
+- Cypress end-to-end testing with Auth0 blog [post](https://sandrino.dev/blog/writing-cypress-e2e-tests-with-auth0)
+- Cypress app example and end-to-end testing with Cypress documentation [here](https://gist.github.com/kevinold/31dbbebd1cb75f311d798f5bc81574a4)
 
 ## Tech Used
 
