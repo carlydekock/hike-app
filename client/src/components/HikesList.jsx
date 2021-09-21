@@ -7,10 +7,9 @@ import { useAuth0 } from '@auth0/auth0-react';
 const HikesList = () => {
   const { hikes, setHikes } = useContext(HikesContext);
   const { getAccessTokenSilently} = useAuth0();
-  //history represents history of the browser
-  let history = useHistory();
+  let history = useHistory(); //history of the browser to use to navigate
 
-  //this will run the hook only when component mounts
+  //will run when component mounts - checking for token then sending in headers
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -31,7 +30,7 @@ const HikesList = () => {
 
 
   const handleDelete = async (e, id) => {
-    //this stops from going up to the table row, where it will interfere with the onClick for details
+    //to stop delete from going up to the table row, where it will interfere with the onClick for details
     e.stopPropagation();
     try {
       await HikeFinder.delete(`/${id}`);
@@ -69,6 +68,7 @@ const HikesList = () => {
             <th scope="col">Description</th>
             <th scope="col">Length</th>
             <th scope="col">Elev. Gain</th>
+            {/* Additional columns in table to display further info */}
             {/* <th scope="col">Time</th>
             <th scope="col">Keywords</th>
             <th scope="col">Latitude</th>

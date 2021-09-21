@@ -3,8 +3,8 @@ import { useHistory } from "react-router-dom";
 import { Auth0Provider } from "@auth0/auth0-react";
 require('dotenv').config();
 
+//From Auth0 docs - with history to redirect user upon login back to previous window
 const Auth0ProviderWithHistory = ({ children }) => {
-  // console.log('this is window location', window.location)
   const history = useHistory();
   const domain = process.env.REACT_APP_AUTH0_DOMAIN;
   const clientId = process.env.REACT_APP_AUTH0_CLIENT_ID;

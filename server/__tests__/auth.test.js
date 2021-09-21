@@ -1,3 +1,5 @@
+'use strict';
+
 const jwt = require('jsonwebtoken');
 const jwksClient = require('jwks-rsa');
 const createJWKSMock = require('mock-jwks');

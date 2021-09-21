@@ -21,7 +21,6 @@ const App = (props) => {
       <div className="container">
         <Router>
           <Switch>
-            {/* <Route exact path="/" component={Home} /> */}
             <Route exact path="/">
               {!props.auth0.isAuthenticated ? <Landing /> : <Home />}
             </Route>

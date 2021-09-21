@@ -1,3 +1,5 @@
+'use strict';
+
 const jwt = require('express-jwt');
 const jwks = require('jwks-rsa');
 
@@ -5,6 +7,7 @@ require('dotenv').config();
 const domain = process.env.REACT_APP_AUTH0_DOMAIN;
 const audience = process.env.REACT_APP_AUTH0_AUDIENCE;
 
+//From Auth0 docs
 const checkJwt = jwt({
   secret: jwks.expressJwtSecret({
     cache: true,

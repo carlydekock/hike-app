@@ -1,11 +1,11 @@
 'use strict';
-// const { Pool } = require('pg');
-process.env.NODE_ENV = 'test';
+
+process.env.NODE_ENV = 'test'; //to switch to the test db instead of real db
 const db = require('../db');
-const request = require('supertest');
+const request = require('supertest'); //to test api and http routes
 const app = require('../app.js');
 require('dotenv').config();
-const sub = process.env.SUB;
+const sub = process.env.SUB; //this is auth0 user credentials to use for testing, auth0 sub property is auth_id in db
 
 beforeAll(async () => {
   await db.query('CREATE TABLE users (id SERIAL PRIMARY KEY, auth_id VARCHAR(255) UNIQUE, first_name VARCHAR(255), last_name VARCHAR(255), email_address VARCHAR(255) UNIQUE);');
