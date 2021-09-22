@@ -4,12 +4,12 @@ import { HikesContext } from '../context/HikesContext';
 import { useHistory } from 'react-router-dom';
 import { useAuth0 } from '@auth0/auth0-react';
 
-const HikesList = (props) => {
+const HikesList = () => {
   const { getAccessTokenSilently } = useAuth0();
   const { hikes, setHikes } = useContext(HikesContext);
-  //history represents history of the browser
-  let history = useHistory();
+  let history = useHistory(); //history of the browser to use to navigate
 
+  //checking for token then sending in headers
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -68,6 +68,7 @@ const HikesList = (props) => {
               <th scope="col">Description</th>
               <th scope="col">Length</th>
               <th scope="col">Elev. Gain</th>
+              {/* Additional columns in table to display further info */}
               {/* <th scope="col">Time</th>
             <th scope="col">Keywords</th>
             <th scope="col">Latitude</th>

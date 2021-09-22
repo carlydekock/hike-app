@@ -4,7 +4,7 @@ import HikeFinder from '../apis/HikeFinder';
 import { useHistory } from 'react-router-dom';
 import UserContext from '../context/UserContext';
 
-const UpdateHike = (props) => {
+const UpdateHike = () => {
   const { id } = useParams();
   let history = useHistory();
   const [name, setName] = useState("");

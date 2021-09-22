@@ -11,26 +11,28 @@ require('dotenv').config();
 const domain = process.env.REACT_APP_AUTH0_DOMAIN;
 
 const app = express();
-//middleware that will take info in body of request and attach to request object under property called body
-app.use(cors());
-app.use(helmet());
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+//Middelware - sits between request and response, has access to both
+app.use(cors()); //allows access from any origin to server resources
+app.use(helmet()); //helps to secure express apps by setting http headers
+app.use(express.json()); //takes info in body of request and attaches to request object under body property
+app.use(express.urlencoded({ extended: true })); //parses incoming requests with urlencoded payloads
 
 //Get all hikes
-app.get('/api/v1/hikes', checkJwt, getHikes);
+app.get('/api/v1/hikes', checkJwt, getHikes); //auth to get to home page
 //Get for list page
-app.get('/api/v1/hikes/list', checkJwt, getMyHikes);
+app.get('/api/v1/hikes/list', checkJwt, getMyHikes); //auth to view users hikes
 //Get an individual hike info
 app.get('/api/v1/hikes/:id', getHikeInfo);
 //Crud operations for /hikes to save, update, and delete
 app.post('/api/v1/hikes', saveHike);
 app.put('/api/v1/hikes/:id', updateHike);
 app.delete('/api/v1/hikes/:id', deleteHike);
+//Post a new trip report for a specified hike
 app.post('/api/v1/hikes/:id/addreport', saveReport);
 
 //Route callback functions
-//Get all callback - GET
+//Get all hikes callback - GET
+//Auth route - check for token, query db to see if user exists, if so get hikes, if not add to db and get hikes
 async function getHikes(req, res){
   try{
     const accessToken = req.headers.authorization.split(' ')[1];
@@ -66,8 +68,8 @@ async function getHikes(req, res){
 }
 
 
-
 //Get one callback - GET
+//Get hike id from params, query db for hike detail
 async function getHikeInfo(req, res){
   try{
     const hikes = await db.query('SELECT * FROM hikes_list WHERE id = $1;', [req.params.id]);
@@ -85,6 +87,7 @@ async function getHikeInfo(req, res){
 }
 
 //Create hike callback - POST
+//Query db for userId from sub (auth0 property in usercontext), insert new hike details into db
 async function saveHike(req, res){
   try{
     const userSubFromAuth0 = req.body.user.sub;
@@ -103,7 +106,8 @@ async function saveHike(req, res){
   }
 }
 
-//Create a new trip report - rendering dynamically with user info
+//Create a new trip report - POST
+//Query db for userId from sub, insert new trip report info
 async function saveReport(req, res){
   try {
     const userSubFromAuth0 = req.body.user.sub;
@@ -122,10 +126,10 @@ async function saveReport(req, res){
   }
 }
 
-//Get user's hikes they have contributed - rendering dynamically with user id
+//Get user's hikes they have contributed - GET
+//Auth route - check for access token, query db for userId, then query db for hikes for that user
 async function getMyHikes(req, res){
   try{
-    //Adding in auth part of route
     const accessToken = req.headers.authorization.split(' ')[1];
     const response = await axios.get(`https://${domain}/userinfo`, {
       headers: {
@@ -151,6 +155,7 @@ async function getMyHikes(req, res){
 }
 
 //Update hike callback - PUT
+//Get hike_id from params, update hikes_list for that hike id
 async function updateHike(req, res){
   try{
     const array = [req.body.name, req.body.description, req.body.length, req.body.elevation_gain, req.body.time, req.body.keywords, req.body.latitude, req.body.longitude, req.params.id];
@@ -167,6 +172,7 @@ async function updateHike(req, res){
 }
 
 //Delete hike callback - DELETE
+//Get hike_id from params, delete from hikes_list for that id
 async function deleteHike(req, res){
   try{
     await db.query('DELETE FROM hikes_list WHERE id=$1;', [req.params.id]);

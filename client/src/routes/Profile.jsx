@@ -2,6 +2,7 @@ import React from "react";
 import NavBar from "../components/NavBar";
 import { useAuth0 } from "@auth0/auth0-react";
 
+//From Auth0 docs - to display Auth0 user credentials
 const Profile = () => {
   const { user } = useAuth0();
   const { name, picture, email } = user;

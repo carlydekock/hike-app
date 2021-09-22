@@ -8,9 +8,6 @@ import { useAuth0 } from '@auth0/auth0-react';
 require('dotenv').config();
 const sub = process.env.SUB;
 const email = process.env.EMAIL;
-// const request = require('supertest');
-// const app = require('../app.js');
-// const {useAuth0} = require('@auth0/auth0-react');
 
 const user = {
   email: `${email}`,

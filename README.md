@@ -15,6 +15,8 @@ Deployed Link: [https://hike-finder.netlify.app/](https://hike-finder.netlify.ap
 - Can view trip reports from other users on current trail conditions, and can leave trip reports themselves.
 - Has a listing of all hikes in the database, and a user's contributed hikes.
 
+## Project Plan: User Stories, DB Schema and Wireframes [here](project-plan.md)
+
 ## What You Need
 
 - Auth0 account
