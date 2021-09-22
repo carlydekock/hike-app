@@ -54,14 +54,14 @@ const AddHike = () => {
         </div>
         <div className="row my-2">
           <div className="form-group input-group col">
-            <input value={length} onChange={(e) => setLength(e.target.value)} name="length" type="text" className="form-control" placeholder="Length (in miles)" />
+            <input value={length} onChange={(e) => setLength(e.target.value)} name="length" type="text" className="form-control" placeholder="Length" />
             <div className="input-group-append">
               <button className="btn btn-outline-secondary" type="button" value="mi" onClick={(e) => setUnit(e.target.value)}>mi</button>
               <button className="btn btn-outline-secondary" type="button" value="km" onClick={(e) => setUnit(e.target.value)}>km</button>
             </div>
           </div>
           <div className="form-group input-group col">
-            <input value={elevation} onChange={(e) => setElevation(e.target.value)}name="elevation" type="text" className="form-control" placeholder="Elevation (in feet)" />
+            <input value={elevation} onChange={(e) => setElevation(e.target.value)}name="elevation" type="text" className="form-control" placeholder="Elevation" />
             <div className="input-group-append">
               <button className="btn btn-outline-secondary" type="button" value="ft" onClick={(e) => setUnitElev(e.target.value)}>ft</button>
               <button className="btn btn-outline-secondary" type="button" value="m" onClick={(e) => setUnitElev(e.target.value)}>m</button>
