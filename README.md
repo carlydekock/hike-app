@@ -9,6 +9,7 @@ Deployed Link: [https://hike-finder.netlify.app/](https://hike-finder.netlify.ap
 ## Application Info
 
 - Hike Finder is an authenticated hiking trails API.
+- Server hosted on Heroku with a PostgreSQL database, and front-end on Netlify
 - First, a user must sign in or create an account through Auth0 to gain access to the site.
 - Then, a user will have access to the database of local hiking trails.
 - Users can view and add to the database, as well as update hike information or remove no longer accessible hikes.
