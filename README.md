@@ -88,6 +88,8 @@ Deployed Link: [https://hike-finder.netlify.app/](https://hike-finder.netlify.ap
 - Cypress testing process not defined error [StackOverflow](https://stackoverflow.com/questions/66378164/referenceerror-process-not-defined-when-executing-cypress-test)
 - Cypress end-to-end testing with Auth0 blog [post](https://sandrino.dev/blog/writing-cypress-e2e-tests-with-auth0)
 - Cypress app example and end-to-end testing with Cypress documentation [here](https://gist.github.com/kevinold/31dbbebd1cb75f311d798f5bc81574a4)
+- Regex to remove quotes for variable used in database query, from [StackOverflow](https://stackoverflow.com/questions/19156148/i-want-to-remove-double-quotes-from-a-string/19156197)
+- PostgreSQL [docs](https://www.postgresql.org/docs/current/textsearch-tables.html#TEXTSEARCH-TABLES-SEARCH) for doing a full text search
 
 ## Tech Used
 
