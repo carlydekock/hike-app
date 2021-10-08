@@ -1,10 +1,12 @@
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 import HikeFinder from '../apis/HikeFinder';
+import { HikesContext } from '../context/HikesContext';
 
 const Search = () => {
 
   const [searchTerms, setSearchTerms] = useState("");
   const [searchType, setSearchType] = useState("");
+  const { hikes, setHikes } = useContext(HikesContext);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -14,7 +16,9 @@ const Search = () => {
       const response = await HikeFinder.post('/search', {
         searchTerms,
         searchType,
-      });
+      })
+      console.log('back from server', response.data);
+      // setHikes(response.data.hikes);
     } catch (err) {
       console.log(err);
     }

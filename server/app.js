@@ -21,6 +21,8 @@ app.use(express.urlencoded({ extended: true })); //parses incoming requests with
 app.get('/api/v1/hikes', checkJwt, getHikes); //auth to get to home page
 //Get for list page
 app.get('/api/v1/hikes/list', checkJwt, getMyHikes); //auth to view users hikes
+//Search functionality
+app.post('/api/v1/hikes/search', searchForHikes);
 //Get an individual hike info
 app.get('/api/v1/hikes/:id', getHikeInfo);
 //Crud operations for /hikes to save, update, and delete
@@ -29,6 +31,7 @@ app.put('/api/v1/hikes/:id', updateHike);
 app.delete('/api/v1/hikes/:id', deleteHike);
 //Post a new trip report for a specified hike
 app.post('/api/v1/hikes/:id/addreport', saveReport);
+
 
 //Route callback functions
 //Get all hikes callback - GET
@@ -178,6 +181,28 @@ async function deleteHike(req, res){
     await db.query('DELETE FROM hikes_list WHERE id=$1;', [req.params.id]);
     res.status(204).json({
       status: 'success',
+    });
+  } catch(err){
+    console.log(err);
+  }
+}
+
+//GET - hikes based on search input
+//Get input from request, search DB and return hikes that match input
+//Note this could a match be from name, description, keywords, etc
+async function searchForHikes(req, res){
+  console.log(req.body);
+  try{
+    //db query with search words
+    const array = [req.body.searchTerms];
+    const searchTypeString = req.body.searchType;
+    const updatedSearch = searchTypeString.replace(/^'(.*)'$/, '$1'); //this cannot have '' for query to work
+    const results = await db.query(`SELECT * FROM hikes_list WHERE to_tsvector(${updatedSearch}) @@ to_tsquery($1);`, array); //need to ensure the first query parameter is not a string, as it is reference to a table in db
+    res.status(201).json({
+      status: 'success',
+      data: {
+        hikes: results.rows,
+      },
     });
   } catch(err){
     console.log(err);
