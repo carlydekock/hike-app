@@ -65,7 +65,7 @@ Deployed Link: [https://hike-finder.netlify.app/](https://hike-finder.netlify.ap
 ![Auth0 Login](img/HikeFinder_AuthLogin.png)
 
 1. Once you've successfully logged in or signed up, you'll be brought to the home screen where you can view hikes information.
-![Home Screen](img/HikeFinder_Home_LoggedIn.png)
+![Home Screen](img/HikeFinderWithSearch.png)
 
 ## Resources
 
@@ -90,6 +90,7 @@ Deployed Link: [https://hike-finder.netlify.app/](https://hike-finder.netlify.ap
 - Cypress app example and end-to-end testing with Cypress documentation [here](https://gist.github.com/kevinold/31dbbebd1cb75f311d798f5bc81574a4)
 - Regex to remove quotes for variable used in database query, from [StackOverflow](https://stackoverflow.com/questions/19156148/i-want-to-remove-double-quotes-from-a-string/19156197)
 - PostgreSQL [docs](https://www.postgresql.org/docs/current/textsearch-tables.html#TEXTSEARCH-TABLES-SEARCH) for doing a full text search
+- Refreshing a page in React from [Upmostly](https://upmostly.com/tutorials/how-to-refresh-a-page-or-component-in-react)
 
 ## Tech Used
 
