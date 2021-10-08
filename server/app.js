@@ -21,7 +21,7 @@ app.use(express.urlencoded({ extended: true })); //parses incoming requests with
 app.get('/api/v1/hikes', checkJwt, getHikes); //auth to get to home page
 //Get for list page
 app.get('/api/v1/hikes/list', checkJwt, getMyHikes); //auth to view users hikes
-//Search functionality
+//Post for search functionality
 app.post('/api/v1/hikes/search', searchForHikes);
 //Get an individual hike info
 app.get('/api/v1/hikes/:id', getHikeInfo);
@@ -69,7 +69,6 @@ async function getHikes(req, res){
     console.log(err);
   }
 }
-
 
 //Get one callback - GET
 //Get hike id from params, query db for hike detail
@@ -192,7 +191,6 @@ async function deleteHike(req, res){
 //Note this could a match be from name, description, keywords, etc
 async function searchForHikes(req, res){
   try{
-    //db query with search words
     const array = [req.body.searchTerms];
     const searchTypeString = req.body.searchType;
     const updatedSearch = searchTypeString.replace(/^'(.*)'$/, '$1'); //this cannot have '' for query to work
