@@ -191,7 +191,6 @@ async function deleteHike(req, res){
 //Get input from request, search DB and return hikes that match input
 //Note this could a match be from name, description, keywords, etc
 async function searchForHikes(req, res){
-  console.log(req.body);
   try{
     //db query with search words
     const array = [req.body.searchTerms];

@@ -6,7 +6,7 @@ const Search = () => {
 
   const [searchTerms, setSearchTerms] = useState("");
   const [searchType, setSearchType] = useState("");
-  const { hikes, setHikes } = useContext(HikesContext);
+  const { setHikes } = useContext(HikesContext);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -17,8 +17,8 @@ const Search = () => {
         searchTerms,
         searchType,
       })
-      console.log('back from server', response.data);
-      // setHikes(response.data.hikes);
+      console.log('back from server', response.data.data.hikes);
+      setHikes(response.data.data.hikes);
     } catch (err) {
       console.log(err);
     }
