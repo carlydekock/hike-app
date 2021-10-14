@@ -31,11 +31,11 @@ Cypress.Commands.add('login', (overrides = {}) => {
 
   const options = {
     method: 'GET',
-    url: Cypress.env('AUTH_URL'),
+    url: Cypress.env('REACT_APP_AUTH_URL'),
     body: {
       grant_type: 'password',
-      username: Cypress.env('AUTH0_USERNAME'),
-      password: Cypress.env('AUTH0_PASSWORD'),
+      username: Cypress.env('REACT_APP_AUTH0_USERNAME'),
+      password: Cypress.env('REACT_APP_AUTH0_PASSWORD'),
       audience: Cypress.env('REACT_APP_AUTH0_AUDIENCE'),
       scope: 'openid profile email',
       client_id: Cypress.env('REACT_APP_AUTH0_CLIENT_ID'),
