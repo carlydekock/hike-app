@@ -6,6 +6,7 @@ import TripReports from '../components/TripReports';
 import AddReport from '../components/AddReport';
 import NavBar from '../components/NavBar';
 import HikeDetail from '../components/HikeDetail';
+import Weather from '../components/Weather';
 
 const Detail = () => {
   const { id } = useParams();
@@ -26,6 +27,7 @@ const Detail = () => {
   return (
     <div>
       <NavBar />
+      {console.log('selectedHike', selectedHike)}
       {selectedHike && (
         <>
         <h1 className="text-center display-1">{selectedHike.hike.name}</h1>
@@ -35,6 +37,7 @@ const Detail = () => {
           <AddReport />
           <br />
           <HikeDetail hike={selectedHike}/>
+          <Weather latitude={selectedHike.hike.latitude} longitude={selectedHike.hike.longitude} />
         </>
       )}
     </div>

@@ -91,6 +91,7 @@ Deployed Link: [https://hike-finder.netlify.app/](https://hike-finder.netlify.ap
 - Regex to remove quotes for variable used in database query, from [StackOverflow](https://stackoverflow.com/questions/19156148/i-want-to-remove-double-quotes-from-a-string/19156197)
 - PostgreSQL [docs](https://www.postgresql.org/docs/current/textsearch-tables.html#TEXTSEARCH-TABLES-SEARCH) for doing a full text search
 - Refreshing a page in React from [Upmostly](https://upmostly.com/tutorials/how-to-refresh-a-page-or-component-in-react)
+- Weatherbit API [docs](https://www.weatherbit.io/api/weather-forecast-16-day)
 
 ## Tech Used
 
